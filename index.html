@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <title>Smart Grocery & Budget Safety Tracker</title>
+  
+  <!-- PWA Meta Tags -->
+  <link rel="manifest" href="./manifest.json">
+  <meta name="theme-color" content="#090d16">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="TroliRantau">
+  <link rel="icon" type="image/svg+xml" href="./icons/app-icon.svg">
+  <link rel="apple-touch-icon" href="./icons/app-icon.svg">
+
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Mobile Viewport Container (Centered max 430px for desktop preview, 100% on phone) -->
+  <div class="mobile-viewport-container">
+
+    <!-- Top Sticky Header & Safety Budget Meter -->
+    <header class="app-header">
+      <div class="brand-row">
+        <div class="brand-info">
+          <div class="brand-icon-box">
+            <i data-lucide="shopping-cart"></i>
+          </div>
+          <div class="brand-text">
+            <h1>TroliRantau</h1>
+            <div class="tagline">Smart Grocery & Budget Tracker</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <button id="btnOpenBudgetModal" class="btn-icon-soft" title="Atur Limit Anggaran" aria-label="Atur Anggaran">
+            <i data-lucide="sliders-horizontal"></i>
+          </button>
+          <button id="btnInstallPwa" class="btn-icon-soft" style="display:none;" title="Pasang ke Layar Utama" aria-label="Install PWA">
+            <i data-lucide="download"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Realtime Safety Cap Card (Always Visible on Supermarket Aisle) -->
+      <section class="safety-cap-card state-safe" id="safetyCapCard">
+        <div class="safety-header">
+          <div class="safety-label-group">
+            <span class="safety-label-text">Safety Cap Dompet</span>
+            <span class="safety-badge badge-safe" id="safetyBadge">
+              <i data-lucide="shield-check" style="width:12px;height:12px;"></i> Aman
+            </span>
+          </div>
+          <button class="budget-limit-btn" id="btnEditBudgetTrigger">
+            Limit: <strong id="lblBudgetLimit">Rp 750.000</strong>
+            <i data-lucide="pencil" style="width:12px;height:12px;"></i>
+          </button>
+        </div>
+
+        <div class="safety-values-row">
+          <div>
+            <div class="spent-amount" id="lblTotalSpent">Rp 0</div>
+          </div>
+          <div style="text-align: right;">
+            <span style="font-size: 0.72rem; color: var(--text-secondary);">Terpakai: </span>
+            <strong id="lblPercentageUsed" style="font-size: 0.95rem; color: #fff;">0%</strong>
+          </div>
+        </div>
+
+        <!-- Progress Bar Meter -->
+        <div class="progress-track">
+          <div class="progress-fill" id="safetyProgressFill" style="width: 0%;"></div>
+        </div>
+
+        <div class="safety-meta-footer">
+          <span class="remaining-label">Sisa Saldo: <strong id="lblRemainingBudget">Rp 750.000</strong></span>
+          <span id="lblSafetyAdvice" style="font-size: 0.68rem; color: var(--text-muted);">Keranjang masih longgar 👍</span>
+        </div>
+      </section>
+    </header>
+
+    <!-- App Content Body -->
+    <main class="app-content">
+
+      <!-- ===================================================================
+           TAB 1: BELANJA (TROLI AKTIF)
+           =================================================================== -->
+      <div id="tab-belanja" class="tab-view active">
+        
+        <!-- Metrics Strip (Total, Hemat Diskon, Qty) -->
+        <div class="metrics-strip">
+          <div class="metric-card">
+            <div class="metric-title"><i data-lucide="package" style="width:14px;height:14px;"></i> Total Belanja</div>
+            <div class="metric-num" id="stripTotalItems">0 Barang</div>
+            <div class="metric-sub" id="stripCheckedRatio">0 di troli fisik</div>
+          </div>
+          <div class="metric-card">
+            <div class="metric-title"><i data-lucide="tag" style="width:14px;height:14px;color:var(--accent-amber);"></i> Hemat Diskon</div>
+            <div class="metric-num" id="stripTotalSavings" style="color:var(--accent-amber);">Rp 0</div>
+            <div class="metric-sub" id="stripSavingsPercent" style="color:var(--text-secondary);">0% off</div>
+          </div>
+        </div>
+
+        <!-- Quick Recommendations for Boarding Students (Anak Rantau Presets) -->
+        <div class="quick-presets-section">
+          <div class="section-label-row">
+            <span class="section-label">⚡ Tambah Cepat Anak Rantau</span>
+            <span style="font-size: 0.68rem; color: var(--text-muted);">Tap untuk isi otomatis</span>
+          </div>
+          <div class="horizontal-scroll-chips">
+            <button class="preset-chip" onclick="quickAddPreset('Beras Ramos 5kg', 'Bahan Pokok', 'kg', 5, 74000, 71000)">
+              🌾 Beras 5kg
+            </button>
+            <button class="preset-chip" onclick="quickAddPreset('Telur Ayam 1kg', 'Bahan Pokok', 'kg', 1, 28000, 29500)">
+              🍳 Telur 1kg
+            </button>
+            <button class="preset-chip" onclick="quickAddPreset('Minyak Goreng 2L', 'Bahan Pokok', 'liter', 2, 34500, 34500)">
+              🛢️ Minyak 2L
+            </button>
+            <button class="preset-chip" onclick="quickAddPreset('Indomie Goreng (5 pcs)', 'Makanan & Camilan', 'pack', 1, 15500, 15000)">
+              🍜 Indomie 5x
+            </button>
+            <button class="preset-chip" onclick="quickAddPreset('Sabun Mandi Refill 450ml', 'Kebersihan & Mandi', 'pack', 1, 22000, 26000, '50+20')">
+              🧼 Sabun Diskon
+            </button>
+            <button class="preset-chip" onclick="quickAddPreset('Kopi Kapal Api 10x', 'Minuman', 'pack', 1, 13000, 13000)">
+              ☕ Kopi 10s
+            </button>
+          </div>
+        </div>
+
+        <!-- Search & Filter Category Bar -->
+        <div class="filter-search-container">
+          <div class="search-input-box">
+            <i data-lucide="search"></i>
+            <input type="text" id="searchInput" placeholder="Cari barang di troli..." autocomplete="off">
+          </div>
+          <div class="category-chips" id="categoryChips">
+            <button class="cat-pill active" data-category="ALL">Semua</button>
+            <button class="cat-pill" data-category="Bahan Pokok">Bahan Pokok</button>
+            <button class="cat-pill" data-category="Makanan & Camilan">Makanan</button>
+            <button class="cat-pill" data-category="Minuman">Minuman</button>
+            <button class="cat-pill" data-category="Kebersihan & Mandi">Kebersihan</button>
+            <button class="cat-pill" data-category="Bumbu & Masak">Bumbu</button>
+            <button class="cat-pill" data-category="Lainnya">Lainnya</button>
+          </div>
+        </div>
+
+        <!-- Grocery Items List -->
+        <div class="grocery-list" id="groceryListContainer">
+          <!-- Dynamically populated by JS -->
+        </div>
+
+        <!-- Trolley Finish & Save Box -->
+        <div class="trolley-finish-box" id="trolleyFinishBox">
+          <div>
+            <div style="font-size: 0.72rem; color: var(--text-secondary);">Selesai Berbelanja?</div>
+            <div style="font-size: 0.85rem; font-weight: 700; color: #fff;">Simpan sesi belanja ini</div>
+          </div>
+          <button class="btn-finish-shopping" id="btnFinishSession">
+            <i data-lucide="check-circle-2"></i> Checkout Selesai
+          </button>
+        </div>
+
+      </div>
+
+      <!-- ===================================================================
+           TAB 2: RIWAYAT (HISTORY & TREND)
+           =================================================================== -->
+      <div id="tab-riwayat" class="tab-view">
+        <div class="history-stats-banner">
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-secondary);">Total Sesi Belanja</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: #fff;" id="lblHistoryTotalSessions">0 Sesi</div>
+            <div style="font-size: 0.68rem; color: var(--primary);" id="lblHistoryAvgSpent">Rata-rata: Rp 0</div>
+          </div>
+          <div>
+            <div style="font-size: 0.7rem; color: var(--text-secondary);">Total Hemat Kumulatif</div>
+            <div style="font-size: 1.3rem; font-weight: 800; color: var(--accent-amber);" id="lblHistoryTotalSaved">Rp 0</div>
+            <div style="font-size: 0.68rem; color: var(--text-muted);">Dari kalkulator promo</div>
+          </div>
+        </div>
+
+        <div class="section-label-row">
+          <span class="section-label">📋 Daftar Sesi Belanja Bulanan</span>
+        </div>
+
+        <div class="grocery-list" id="historyListContainer">
+          <!-- Dynamically populated -->
+        </div>
+      </div>
+
+      <!-- ===================================================================
+           TAB 3: ANGGARAN & REFERENSI (BUDGET & BENCHMARK)
+           =================================================================== -->
+      <div id="tab-anggaran" class="tab-view">
+        <!-- Budget Settings Section -->
+        <div class="setting-section">
+          <div class="setting-title">
+            <i data-lucide="shield-alert" style="color:var(--primary);width:18px;height:18px;"></i>
+            Atur Safety Cap Anggaran
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary);">
+            Batas maksimal uang saku untuk satu sesi belanja bulanan supermarket. Sistem akan memberi peringatan visual saat mendekati limit.
+          </p>
+
+          <div class="form-group">
+            <label class="form-label">Nominal Batas Dompet (Rp)</label>
+            <input type="number" id="inputSettingBudget" class="form-input" placeholder="750000" step="10000">
+          </div>
+
+          <div class="preset-budget-grid">
+            <button class="btn-budget-preset" onclick="setBudgetAmount(500000)">Rp 500.000<br><small style="color:var(--text-muted);">Super Hemat</small></button>
+            <button class="btn-budget-preset" onclick="setBudgetAmount(750000)">Rp 750.000<br><small style="color:var(--text-muted);">Standar Kos</small></button>
+            <button class="btn-budget-preset" onclick="setBudgetAmount(1000000)">Rp 1.000.000<br><small style="color:var(--text-muted);">Lengkap Bulanan</small></button>
+            <button class="btn-budget-preset" onclick="setBudgetAmount(1500000)">Rp 1.500.000<br><small style="color:var(--text-muted);">Stok Ekstra</small></button>
+          </div>
+
+          <button class="btn-submit-item" id="btnSaveBudgetSetting" style="margin-top: 4px;">
+            <i data-lucide="save"></i> Simpan Batas Anggaran
+          </button>
+        </div>
+
+        <!-- Database Harga Acuan Bulan Lalu -->
+        <div class="setting-section">
+          <div class="setting-title">
+            <i data-lucide="database" style="color:var(--accent-cyan);width:18px;height:18px;"></i>
+            Database Acuan Bulan Lalu
+          </div>
+          <p style="font-size: 0.75rem; color: var(--text-secondary);">
+            Daftar harga bulan lalu yang dijadikan patokan pembanding realtime indikator Panah Merah (↑) & Panah Hijau (↓).
+          </p>
+
+          <div id="catalogListContainer" style="display: flex; flex-direction: column; gap: 6px; max-height: 280px; overflow-y: auto;">
+            <!-- Rendered by JS -->
+          </div>
+
+          <button class="btn-history-ref" id="btnResetDefaultCatalog" style="padding: 10px; text-align: center; color: var(--text-secondary);">
+            <i data-lucide="rotate-ccw" style="width:14px;height:14px;display:inline-block;vertical-align:middle;"></i> Reset Katalog Default Anak Rantau
+          </button>
+        </div>
+
+        <!-- App Information -->
+        <div class="setting-section" style="border:none; background: transparent; text-align: center; padding: 4px 10px 20px;">
+          <div style="font-size: 0.74rem; color: var(--text-muted);">
+            TroliRantau PWA v1.0 • Dibuat khusus untuk siswa & mahasiswa rantau
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Floating Thumb Action Button (+ Tambah Item) -->
+    <button class="floating-add-btn" id="btnOpenAddModal" aria-label="Tambah Item Belanja">
+      <i data-lucide="plus"></i> Tambah Item
+    </button>
+
+    <!-- Floating Bottom Navigation Bar (Lucide Icons) -->
+    <nav class="bottom-nav">
+      <button class="nav-tab-btn active" data-tab="tab-belanja" id="navBtnBelanja">
+        <i data-lucide="shopping-cart"></i>
+        <span>Belanja</span>
+        <span class="nav-badge-count" id="navCartCount" style="display:none;">0</span>
+      </button>
+
+      <button class="nav-tab-btn" data-tab="tab-riwayat" id="navBtnRiwayat">
+        <i data-lucide="history"></i>
+        <span>Riwayat</span>
+      </button>
+
+      <button class="nav-tab-btn" data-tab="tab-anggaran" id="navBtnAnggaran">
+        <i data-lucide="wallet"></i>
+        <span>Anggaran</span>
+      </button>
+    </nav>
+
+    <!-- ===================================================================
+         BOTTOM SHEET MODAL: TAMBAH / EDIT ITEM BELANJA
+         =================================================================== -->
+    <div class="modal-overlay" id="itemModalOverlay">
+      <div class="bottom-sheet">
+        <div class="sheet-handle-bar"></div>
+        <div class="sheet-header">
+          <h2 class="sheet-title" id="sheetTitleText">Tambah Item Belanja</h2>
+          <button class="btn-close-sheet" id="btnCloseItemModal" aria-label="Tutup Form">
+            <i data-lucide="x"></i>
+          </button>
+        </div>
+
+        <form id="itemForm" class="sheet-scroll-body" onsubmit="event.preventDefault(); saveGroceryItem();">
+          <input type="hidden" id="editItemId" value="">
+
+          <!-- Nama Produk -->
+          <div class="form-group">
+            <label class="form-label" for="inputItemName">
+              <span>Nama Produk Supermarket</span>
+              <span style="font-size:0.68rem;color:var(--primary);">*Wajib</span>
+            </label>
+            <input type="text" id="inputItemName" class="form-input" placeholder="Contoh: Beras Ramos 5kg, Telur Ayam..." required autocomplete="off">
+            <!-- Autocomplete Suggestions List -->
+            <datalist id="presetCatalogSuggestions"></datalist>
+          </div>
+
+          <!-- Kategori & Satuan -->
+          <div class="form-row-2">
+            <div class="form-group">
+              <label class="form-label" for="selectCategory">Kategori</label>
+              <select id="selectCategory" class="form-input" style="padding-right: 28px;">
+                <option value="Bahan Pokok">Bahan Pokok</option>
+                <option value="Makanan & Camilan">Makanan</option>
+                <option value="Minuman">Minuman</option>
+                <option value="Kebersihan & Mandi">Kebersihan</option>
+                <option value="Bumbu & Masak">Bumbu</option>
+                <option value="Lainnya">Lainnya</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="selectUnit">Satuan</label>
+              <select id="selectUnit" class="form-input">
+                <option value="pcs">pcs</option>
+                <option value="kg">kg</option>
+                <option value="liter">liter</option>
+                <option value="pack">pack</option>
+                <option value="botol">botol</option>
+                <option value="sachet">sachet</option>
+                <option value="dus">dus</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Harga Satuan & Realtime Comparator -->
+          <div class="form-group">
+            <div class="form-label">
+              <span>Harga Satuan Normal (Rp)</span>
+              <span id="lblRefPriceHint" style="font-size:0.68rem;color:var(--accent-cyan);"></span>
+            </div>
+            <input type="number" id="inputUnitPrice" class="form-input" placeholder="Contoh: 25000" required min="1" step="100">
+            
+            <!-- Quick Add Rupiah Chips -->
+            <div class="quick-rupiah-chips">
+              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(5000)">+5rb</button>
+              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(10000)">+10rb</button>
+              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(25000)">+25rb</button>
+              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(50000)">+50rb</button>
+            </div>
+
+            <!-- Realtime Price Comparator Feedback Alert -->
+            <div class="form-comparator-feedback" id="formComparatorFeedback">
+              <!-- Dynamically populated: Red Arrow UP / Green Arrow DOWN / Equal / New Item -->
+            </div>
+          </div>
+
+          <!-- Kuantitas (Qty Stepper) -->
+          <div class="form-group">
+            <label class="form-label">Kuantitas Beli (Qty)</label>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div class="stepper-container" style="flex: 1; padding: 4px;">
+                <button type="button" class="btn-stepper" id="btnFormQtyMinus" style="width: 44px; height: 44px;">-</button>
+                <input type="number" id="inputFormQty" class="stepper-value" value="1" min="1" max="999" style="background:transparent;border:none;font-size:1.2rem;width:100%;color:#fff;outline:none;" required>
+                <button type="button" class="btn-stepper" id="btnFormQtyPlus" style="width: 44px; height: 44px;">+</button>
+              </div>
+              <!-- Quick Qty buttons -->
+              <div style="display: flex; gap: 6px;">
+                <button type="button" class="chip-rupiah" onclick="setFormQty(2)">2x</button>
+                <button type="button" class="chip-rupiah" onclick="setFormQty(3)">3x</button>
+                <button type="button" class="chip-rupiah" onclick="setFormQty(5)">5x</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Kalkulator Diskon Bertingkat (SRS Checklist) -->
+          <div class="discount-module-box">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="font-size:0.75rem; font-weight:700; color:var(--accent-amber); display:flex; align-items:center; gap:4px;">
+                <i data-lucide="percent" style="width:14px;height:14px;"></i> Kalkulator Promo & Diskon
+              </span>
+              <span id="lblDiscountSummaryPill" style="font-size:0.68rem; color:#fff; font-weight:700;">Tanpa Diskon</span>
+            </div>
+
+            <!-- Discount Mode Switcher -->
+            <div class="discount-tabs">
+              <button type="button" class="btn-disc-tab active" data-mode="NONE" onclick="selectDiscountMode('NONE')">Tanpa Diskon</button>
+              <button type="button" class="btn-disc-tab" data-mode="SINGLE" onclick="selectDiscountMode('SINGLE')">Tunggal (%)</button>
+              <button type="button" class="btn-disc-tab" data-mode="STACKED" onclick="selectDiscountMode('STACKED')">Bertingkat (+)</button>
+              <button type="button" class="btn-disc-tab" data-mode="NOMINAL" onclick="selectDiscountMode('NOMINAL')">Potongan (Rp)</button>
+            </div>
+
+            <!-- Form Mode: Single Discount -->
+            <div id="paneDiscSingle" style="display: none;">
+              <div class="form-group">
+                <label class="form-label">Persentase Diskon (%)</label>
+                <input type="number" id="inputDiscSingle" class="form-input" placeholder="Contoh: 25" min="0" max="100" step="1">
+              </div>
+            </div>
+
+            <!-- Form Mode: Stacked Multi-tier Discount (e.g. 50% + 20%) -->
+            <div id="paneDiscStacked" style="display: none;">
+              <div class="form-group">
+                <label class="form-label">Diskon Bertumpuk Supermarket (Contoh: 50% + 20%)</label>
+                <div class="stacked-discount-inputs">
+                  <div>
+                    <input type="number" id="inputDiscTier1" class="form-input" placeholder="50%" min="0" max="100" step="1">
+                    <span style="font-size:0.65rem; color:var(--text-muted);">Diskon ke-1</span>
+                  </div>
+                  <div class="discount-plus-symbol">+</div>
+                  <div>
+                    <input type="number" id="inputDiscTier2" class="form-input" placeholder="20%" min="0" max="100" step="1">
+                    <span style="font-size:0.65rem; color:var(--text-muted);">Diskon ke-2</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Form Mode: Nominal Cut -->
+            <div id="paneDiscNominal" style="display: none;">
+              <div class="form-group">
+                <label class="form-label">Potongan Harga Langsung (Rp per item)</label>
+                <input type="number" id="inputDiscNominal" class="form-input" placeholder="Contoh: 5000" min="0" step="500">
+              </div>
+            </div>
+
+            <!-- Live Mathematical Explanation Box -->
+            <div class="discount-math-preview" id="discountMathPreview" style="display: none;">
+              <!-- Live formula walkthrough rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Live Subtotal Preview -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid var(--border-subtle); border-radius:var(--radius-sm); padding:10px 14px; display:flex; justify-content:space-between; align-items:center;">
+            <div>
+              <span style="font-size:0.72rem; color:var(--text-secondary);">Subtotal Baris Item:</span>
+              <div id="lblFormLiveStrikedPrice" style="font-size:0.72rem; color:var(--text-muted); text-decoration:line-through; display:none;"></div>
+            </div>
+            <div id="lblFormLiveSubtotal" style="font-family:var(--font-display); font-size:1.25rem; font-weight:800; color:var(--primary);">
+              Rp 0
+            </div>
+          </div>
+
+          <!-- Bottom Action Buttons inside Form -->
+          <div class="sheet-footer" style="padding: 10px 0 0;">
+            <button type="submit" class="btn-submit-item" id="btnSubmitItemForm">
+              <i data-lucide="check"></i> Simpan ke Troli
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Quick Modal: Edit Budget Cap Limit -->
+    <div class="modal-overlay" id="budgetModalOverlay">
+      <div class="mini-modal">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <h3 style="font-size:1.05rem; font-weight:700; color:#fff;">Ubah Limit Dompet</h3>
+          <button class="btn-card-action" onclick="closeBudgetModal()"><i data-lucide="x"></i></button>
+        </div>
+        <p style="font-size:0.75rem; color:var(--text-secondary);">
+          Masukkan batas maksimal pengeluaran belanja bulanan kali ini:
+        </p>
+        <div class="form-group">
+          <input type="number" id="quickBudgetInput" class="form-input" placeholder="750000" step="10000">
+        </div>
+        <button class="btn-submit-item" onclick="saveQuickBudget()">
+          <i data-lucide="check"></i> Terapkan Batas
+        </button>
+      </div>
+    </div>
+
+    <!-- PWA Install Toast Banner -->
+    <div class="pwa-toast" id="pwaToast">
+      <div style="display:flex; align-items:center; gap:8px;">
+        <i data-lucide="smartphone" style="color:var(--primary);width:20px;height:20px;"></i>
+        <span style="font-size:0.75rem; color:#fff;">Pasang di layar HP untuk belanja offline!</span>
+      </div>
+      <button class="btn-icon-soft" id="btnAcceptInstall" style="width:auto; padding:4px 10px; border-radius:6px; background:var(--primary); color:#042f2e; font-weight:700; font-size:0.75rem;">
+        Pasang
+      </button>
+    </div>
+
+  </div>
+
+  <!-- App Core JavaScript Logic -->
+  <script src="./js/app.js"></script>
+</body>
+</html>
