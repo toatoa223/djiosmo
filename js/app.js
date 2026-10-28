@@ -18,25 +18,26 @@ let cloudSyncTimeout = null;
 // ===================================================================
 
 const DEFAULT_BENCHMARK_CATALOG = [
-  { id: 'cat-1', name: 'Beras Ramos 5kg', category: 'Bahan Pokok', unit: 'kg', price: 71000 },
-  { id: 'cat-2', name: 'Telur Ayam 1kg', category: 'Bahan Pokok', unit: 'kg', price: 29500 },
-  { id: 'cat-3', name: 'Minyak Goreng 2L', category: 'Bahan Pokok', unit: 'liter', price: 34500 },
-  { id: 'cat-4', name: 'Indomie Goreng (5 pcs)', category: 'Makanan & Camilan', unit: 'pack', price: 15000 },
-  { id: 'cat-5', name: 'Sabun Mandi Refill 450ml', category: 'Kebersihan & Mandi', unit: 'pack', price: 26000 },
-  { id: 'cat-6', name: 'Deterjen Rinso 770g', category: 'Kebersihan & Mandi', unit: 'pack', price: 22000 },
-  { id: 'cat-7', name: 'Mama Lemon 680ml', category: 'Kebersihan & Mandi', unit: 'botol', price: 10500 },
-  { id: 'cat-8', name: 'Kopi Kapal Api 10x', category: 'Minuman', unit: 'pack', price: 13000 },
-  { id: 'cat-9', name: 'Ultra Milk Full Cream 1L', category: 'Minuman', unit: 'liter', price: 19000 },
-  { id: 'cat-10', name: 'Bawang Merah 250g', category: 'Bumbu & Masak', unit: 'pack', price: 12000 },
-  { id: 'cat-11', name: 'Kecap Manis Bango 520ml', category: 'Bumbu & Masak', unit: 'botol', price: 24000 }
+  { id: 'cat-1', name: 'Beras Rojolele', category: 'Bahan Pokok', unit: 'karung/5kg', price: 68000 },
+  { id: 'cat-2', name: 'Beras 5kg', category: 'Bahan Pokok', unit: 'kg', price: 68000 },
+  { id: 'cat-3', name: 'Telur 1kg', category: 'Bahan Pokok', unit: 'kg', price: 32000 },
+  { id: 'cat-4', name: 'Telur Ayam 1kg', category: 'Bahan Pokok', unit: 'kg', price: 32000 },
+  { id: 'cat-5', name: 'Garam 500g', category: 'Bumbu & Masak', unit: 'pack', price: 5000 },
+  { id: 'cat-6', name: 'Minyak Goreng 2L', category: 'Bahan Pokok', unit: 'liter', price: 43000 },
+  { id: 'cat-7', name: 'Sabun Cuci', category: 'Kebersihan & Mandi', unit: 'pack', price: 20000 },
+  { id: 'cat-8', name: 'Wajan', category: 'Lainnya', unit: 'pcs', price: 100000 },
+  { id: 'cat-9', name: 'Indomie Goreng (5 pcs)', category: 'Makanan & Camilan', unit: 'pack', price: 15000 },
+  { id: 'cat-10', name: 'Kopi Kapal Api 10x', category: 'Minuman', unit: 'pack', price: 13000 },
+  { id: 'cat-11', name: 'Bawang Merah 250g', category: 'Bumbu & Masak', unit: 'pack', price: 12000 },
+  { id: 'cat-12', name: 'Kecap Manis Bango 520ml', category: 'Bumbu & Masak', unit: 'botol', price: 24000 }
 ];
 
 const INITIAL_DEMO_GROCERY_ITEMS = [
   {
     id: 'demo-1',
-    name: 'Beras Ramos 5kg',
+    name: 'Beras Rojolele',
     category: 'Bahan Pokok',
-    unit: 'kg',
+    unit: 'karung/5kg',
     qty: 1,
     unitPrice: 74000,
     discountMode: 'NONE',
@@ -44,48 +45,18 @@ const INITIAL_DEMO_GROCERY_ITEMS = [
     discountTier1: 0,
     discountTier2: 0,
     discountNominal: 0,
-    isChecked: true,
-    addedAt: new Date().toISOString()
-  },
-  {
-    id: 'demo-2',
-    name: 'Telur Ayam 1kg',
-    category: 'Bahan Pokok',
-    unit: 'kg',
-    qty: 1,
-    unitPrice: 28000,
-    discountMode: 'NONE',
-    discountSingle: 0,
-    discountTier1: 0,
-    discountTier2: 0,
-    discountNominal: 0,
-    isChecked: true,
-    addedAt: new Date().toISOString()
-  },
-  {
-    id: 'demo-3',
-    name: 'Sabun Mandi Refill 450ml',
-    category: 'Kebersihan & Mandi',
-    unit: 'pack',
-    qty: 2,
-    unitPrice: 25000,
-    discountMode: 'STACKED',
-    discountSingle: 0,
-    discountTier1: 50,
-    discountTier2: 20,
-    discountNominal: 0,
     isChecked: false,
     addedAt: new Date().toISOString()
   },
   {
-    id: 'demo-4',
-    name: 'Indomie Goreng (5 pcs)',
-    category: 'Makanan & Camilan',
-    unit: 'pack',
-    qty: 3,
-    unitPrice: 15500,
-    discountMode: 'SINGLE',
-    discountSingle: 10,
+    id: 'demo-2',
+    name: 'Minyak Goreng 2L',
+    category: 'Bahan Pokok',
+    unit: 'liter',
+    qty: 1,
+    unitPrice: 43000,
+    discountMode: 'NONE',
+    discountSingle: 0,
     discountTier1: 0,
     discountTier2: 0,
     discountNominal: 0,
@@ -97,17 +68,17 @@ const INITIAL_DEMO_GROCERY_ITEMS = [
 const INITIAL_DEMO_HISTORY = [
   {
     id: 'hist-prev-month',
-    date: '15 September 2026',
-    storeLocation: 'Supermarket',
-    itemCount: 8,
-    totalSpent: 485000,
-    totalSaved: 42000,
-    budgetLimit: 750000,
+    date: '26 September 2026',
+    storeLocation: 'Lotte Mart Grocery - Puri Indah',
+    itemCount: 4,
+    totalSpent: 148000,
+    totalSaved: 0,
+    budgetLimit: 150000,
     itemsPreview: [
-      { name: 'Beras Ramos 5kg', qty: 1, price: 71000 },
-      { name: 'Minyak Goreng 2L', qty: 2, price: 69000 },
-      { name: 'Telur Ayam 1kg', qty: 1, price: 29500 },
-      { name: 'Toiletries & Sabun', qty: 4, price: 95500 }
+      { name: 'Beras Rojolele', qty: 1, price: 68000, unitPrice: 68000 },
+      { name: 'Telur Ayam 1kg', qty: 1, price: 32000, unitPrice: 32000 },
+      { name: 'Garam 500g', qty: 1, price: 5000, unitPrice: 5000 },
+      { name: 'Minyak Goreng 2L', qty: 1, price: 43000, unitPrice: 43000 }
     ]
   }
 ];
@@ -117,9 +88,9 @@ const INITIAL_DEMO_HISTORY = [
 // ===================================================================
 
 const state = {
-  budgetLimit: 750000,
-  storeLocation: 'Supermarket',
-  shoppingDate: new Date().toISOString().split('T')[0],
+  budgetLimit: 150000,
+  storeLocation: 'Lotte Mart Grocery - Puri Indah',
+  shoppingDate: '2026-10-26',
   groceryItems: [],
   benchmarkCatalog: [],
   historySessions: [],
@@ -235,6 +206,86 @@ function syncMetaControls() {
   if (inputDate && document.activeElement !== inputDate) {
     inputDate.value = state.shoppingDate || new Date().toISOString().split('T')[0];
   }
+}
+
+// ===================================================================
+// NON-BLOCKING TOAST & CONFIRMATION MODAL (UX COMPLIANCE)
+// ===================================================================
+
+let toastTimeout = null;
+
+function showToast(message, type = 'info') {
+  const toast = document.getElementById('appToast');
+  const toastMsg = document.getElementById('toastMessage');
+  const toastIcon = document.getElementById('toastIcon');
+
+  if (!toast || !toastMsg) return;
+
+  if (toastTimeout) clearTimeout(toastTimeout);
+
+  toast.className = `toast-notification ${type} show`;
+  toastMsg.textContent = message;
+
+  if (toastIcon) {
+    if (type === 'success') toastIcon.setAttribute('data-lucide', 'check-circle-2');
+    else if (type === 'warning') toastIcon.setAttribute('data-lucide', 'alert-triangle');
+    else if (type === 'danger') toastIcon.setAttribute('data-lucide', 'alert-circle');
+    else toastIcon.setAttribute('data-lucide', 'info');
+    refreshIcons();
+  }
+
+  toastTimeout = setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2800);
+}
+
+let activeConfirmCallback = null;
+
+function openConfirmModal({ title = 'Konfirmasi Hapus', message = 'Apakah Anda yakin?', onConfirm }) {
+  const modal = document.getElementById('confirmDeleteModal');
+  const titleEl = document.getElementById('confirmModalTitle');
+  const descEl = document.getElementById('confirmModalDesc');
+  const btnExecute = document.getElementById('btnExecuteConfirm');
+  const btnCancel = document.getElementById('btnCancelConfirm');
+
+  if (!modal) return;
+
+  if (titleEl) titleEl.textContent = title;
+  if (descEl) descEl.textContent = message;
+
+  activeConfirmCallback = onConfirm;
+  modal.classList.add('active');
+
+  btnExecute.onclick = () => {
+    modal.classList.remove('active');
+    if (typeof activeConfirmCallback === 'function') {
+      activeConfirmCallback();
+      activeConfirmCallback = null;
+    }
+  };
+
+  btnCancel.onclick = () => {
+    modal.classList.remove('active');
+    activeConfirmCallback = null;
+  };
+}
+
+function requestClearCart() {
+  if (state.groceryItems.length === 0) {
+    showToast('Keranjang troli sudah kosong.', 'info');
+    return;
+  }
+
+  openConfirmModal({
+    title: 'Kosongkan Seluruh Keranjang?',
+    message: 'Semua daftar belanjaan aktif akan dihapus permanen. Aksi ini aman dan dapat diisi kembali kapan saja.',
+    onConfirm: () => {
+      state.groceryItems = [];
+      persistState();
+      renderGroceryList();
+      showToast('Seluruh isi keranjang belanja berhasil dikosongkan.', 'info');
+    }
+  });
 }
 
 // ===================================================================
@@ -428,26 +479,26 @@ function updateSafetyBudgetBar() {
   // Width capped to 100%
   fillBar.style.width = `${Math.min(100, Math.max(0, percentage))}%`;
 
-  // Status Classes & Warnings
+  // Status Classes & Warnings (SRS F-05 Compliance)
   safetyCard.classList.remove('state-safe', 'state-warning', 'state-danger');
 
-  if (percentage < 75) {
+  if (percentage < 90) {
     safetyCard.classList.add('state-safe');
     safetyBadge.className = 'safety-badge badge-safe';
     safetyBadge.innerHTML = '<i data-lucide="shield-check" style="width:12px;height:12px;"></i> Aman';
     lblAdvice.textContent = 'Keranjang masih santai 👍';
     lblRemaining.style.color = 'var(--primary)';
-  } else if (percentage <= 92) {
+  } else if (percentage <= 100) {
     safetyCard.classList.add('state-warning');
     safetyBadge.className = 'safety-badge badge-warning';
-    safetyBadge.innerHTML = '<i data-lucide="alert-triangle" style="width:12px;height:12px;"></i> Waspada';
-    lblAdvice.textContent = 'Mendekati batas dompet! ⚠️';
+    safetyBadge.innerHTML = '<i data-lucide="alert-triangle" style="width:12px;height:12px;"></i> Peringatan Waspada';
+    lblAdvice.textContent = 'Mendekati batas saldo dompet! (≥ 90%) ⚠️';
     lblRemaining.style.color = 'var(--accent-amber)';
   } else {
     safetyCard.classList.add('state-danger');
     safetyBadge.className = 'safety-badge badge-danger';
     safetyBadge.innerHTML = '<i data-lucide="siren" style="width:12px;height:12px;"></i> Over Budget!';
-    lblAdvice.textContent = '🚨 REM BELANJA! Melebihi Limit Dompet!';
+    lblAdvice.textContent = 'Total belanja melebihi batas saldo dompet! Kurangi kuantitas atau batalkan barang sekunder.';
     lblRemaining.style.color = 'var(--accent-rose)';
 
     // Trigger haptic vibration if supported (useful on real phones)
@@ -498,8 +549,8 @@ function renderGroceryList() {
           <div class="empty-icon-wrap">
             <i data-lucide="shopping-bag" style="width:30px;height:30px;"></i>
           </div>
-          <h3>Troli Belanja Masih Kosong</h3>
-          <p>Tap tombol "+ Tambah Item" atau pilih rekomendasi cepat anak rantau di atas untuk mulai mencatat.</p>
+          <h3>Keranjang Belanja Masih Kosong</h3>
+          <p>Keranjang belanja masih kosong, silakan scan atau tambahkan kebutuhan pokok pertamamu.</p>
         </div>
       `;
       if (finishBox) finishBox.style.display = 'none';
@@ -581,11 +632,11 @@ function renderGroceryList() {
           </div>
         </div>
 
-        <!-- Bottom row: Qty Stepper & Live Subtotal -->
+        <!-- Bottom row: Qty Stepper (+/- and Direct Numeric Typing) & Live Subtotal -->
         <div class="grocery-card-bottom">
           <div class="stepper-container">
             <button class="btn-stepper" onclick="changeItemQty('${item.id}', -1)">-</button>
-            <span class="stepper-value">${item.qty}</span>
+            <input type="number" inputmode="numeric" min="1" max="999" class="stepper-value-input" value="${item.qty}" onchange="setItemQtyDirect('${item.id}', this.value)" oninput="setItemQtyDirect('${item.id}', this.value)" title="Ketik kuantitas langsung">
             <button class="btn-stepper" onclick="changeItemQty('${item.id}', 1)">+</button>
           </div>
 
@@ -608,7 +659,7 @@ function renderGroceryList() {
 }
 
 // ===================================================================
-// ITEM INTERACTION HANDLERS (STEPPER, CHECK, DELETE)
+// ITEM INTERACTION HANDLERS (STEPPER, DIRECT QTY, CHECK, DELETE)
 // ===================================================================
 
 function changeItemQty(itemId, delta) {
@@ -617,15 +668,25 @@ function changeItemQty(itemId, delta) {
 
   const newQty = (item.qty || 1) + delta;
   if (newQty <= 0) {
-    if (confirm(`Hapus "${item.name}" dari troli belanja?`)) {
-      deleteGroceryItem(itemId);
-    }
+    deleteGroceryItem(itemId);
     return;
   }
 
   item.qty = newQty;
   persistState();
   renderGroceryList();
+}
+
+function setItemQtyDirect(itemId, value) {
+  const item = state.groceryItems.find(i => i.id === itemId);
+  if (!item) return;
+
+  const parsed = parseInt(value, 10);
+  if (!isNaN(parsed) && parsed > 0) {
+    item.qty = parsed;
+    persistState();
+    renderGroceryList();
+  }
 }
 
 function toggleItemCheck(itemId) {
@@ -638,9 +699,20 @@ function toggleItemCheck(itemId) {
 }
 
 function deleteGroceryItem(itemId) {
-  state.groceryItems = state.groceryItems.filter(i => i.id !== itemId);
-  persistState();
-  renderGroceryList();
+  const item = state.groceryItems.find(i => i.id === itemId);
+  if (!item) return;
+
+  const itemName = item.name;
+  openConfirmModal({
+    title: 'Hapus Barang?',
+    message: `Hapus "${itemName}" dari daftar keranjang belanja?`,
+    onConfirm: () => {
+      state.groceryItems = state.groceryItems.filter(i => i.id !== itemId);
+      persistState();
+      renderGroceryList();
+      showToast(`"${itemName}" dihapus dari keranjang.`, 'info');
+    }
+  });
 }
 
 // Quick Add Anak Rantau Presets
@@ -660,10 +732,14 @@ function quickAddPreset(name, category, unit, qty, price, refPrice, discountTag 
   }
 
   let discountMode = 'NONE';
+  let dSingle = 0;
   let t1 = 0;
   let t2 = 0;
 
-  if (discountTag === '50+20') {
+  if (discountTag === '25') {
+    discountMode = 'SINGLE';
+    dSingle = 25;
+  } else if (discountTag === '50+20') {
     discountMode = 'STACKED';
     t1 = 50;
     t2 = 20;
@@ -682,7 +758,7 @@ function quickAddPreset(name, category, unit, qty, price, refPrice, discountTag 
       qty,
       unitPrice: price,
       discountMode,
-      discountSingle: 0,
+      discountSingle: dSingle,
       discountTier1: t1,
       discountTier2: t2,
       discountNominal: 0,
@@ -694,6 +770,7 @@ function quickAddPreset(name, category, unit, qty, price, refPrice, discountTag 
   persistState();
   renderGroceryList();
   highlightNewlyAddedItem(name);
+  showToast(`"${name}" berhasil ditambahkan ke troli!`, 'success');
 }
 
 function highlightNewlyAddedItem(name) {
@@ -905,8 +982,21 @@ function saveGroceryItem() {
   const qty = Math.max(1, Number(inputFormQty.value) || 1);
   const editId = editItemIdInput.value;
 
-  if (!name || isNaN(unitPrice) || unitPrice <= 0) {
-    alert('Mohon isi nama produk dan harga satuan dengan benar!');
+  if (!name) {
+    showToast('Nama barang belanjaan wajib diisi!', 'warning');
+    inputItemName.focus();
+    return;
+  }
+
+  if (isNaN(unitPrice) || unitPrice <= 0) {
+    showToast('Harga satuan harus berupa angka positif lebih dari Rp 0 (tidak boleh minus)!', 'warning');
+    inputUnitPrice.focus();
+    return;
+  }
+
+  if (isNaN(qty) || qty <= 0) {
+    showToast('Kuantitas beli minimal 1!', 'warning');
+    inputFormQty.focus();
     return;
   }
 
@@ -965,6 +1055,7 @@ function saveGroceryItem() {
   persistState();
   closeItemModal();
   renderGroceryList();
+  showToast(`"${name}" berhasil disimpan ke troli!`, 'success');
 }
 
 // ===================================================================
@@ -973,7 +1064,7 @@ function saveGroceryItem() {
 
 function finishShoppingSession() {
   if (state.groceryItems.length === 0) {
-    alert('Keranjang troli masih kosong!');
+    showToast('Keranjang troli masih kosong!', 'warning');
     return;
   }
 
@@ -1036,7 +1127,12 @@ function finishShoppingSession() {
   state.groceryItems = [];
   persistState();
 
-  alert(`🎉 Belanja Berhasil Disimpan!\nTotal Belanja: ${formatRupiah(totalSpent)}\nHemat Diskon: ${formatRupiah(totalSaved)}\n\nDatabase harga belanja ini otomatis dijadikan acuan pembanding resmi untuk bulan depan!`);
+  showToast(`🎉 Belanja Berhasil Disimpan! Total: ${formatRupiah(totalSpent)}`, 'success');
+
+  renderGroceryList();
+  renderHistoryView();
+  switchTab('tab-riwayat');
+}
 
   renderGroceryList();
   renderHistoryView();
@@ -1156,7 +1252,7 @@ function useHistoryAsCurrentBenchmark(sessionId) {
   persistState();
   renderCatalogList();
   renderGroceryList();
-  alert(`✅ Sesi ${session.date} berhasil dijadikan patokan harga bulan lalu!`);
+  showToast(`✅ Sesi ${session.date} berhasil dijadikan acuan bulan lalu!`, 'success');
 }
 
 // ===================================================================
@@ -1220,13 +1316,17 @@ function setBudgetAmount(amount) {
 }
 
 function resetDefaultCatalog() {
-  if (confirm('Kembalikan database harga acuan bulan lalu ke template default anak rantau?')) {
-    state.benchmarkCatalog = JSON.parse(JSON.stringify(DEFAULT_BENCHMARK_CATALOG));
-    persistState();
-    renderCatalogList();
-    renderGroceryList();
-    alert('✅ Database harga acuan telah direset.');
-  }
+  openConfirmModal({
+    title: 'Reset Database Acuan?',
+    message: 'Kembalikan database harga acuan bulan lalu ke template default anak rantau DT2?',
+    onConfirm: () => {
+      state.benchmarkCatalog = JSON.parse(JSON.stringify(DEFAULT_BENCHMARK_CATALOG));
+      persistState();
+      renderCatalogList();
+      renderGroceryList();
+      showToast('✅ Database harga acuan telah direset.', 'success');
+    }
+  });
 }
 
 // Quick Budget Modal
@@ -1321,7 +1421,7 @@ if (btnInstallPwa) {
     if (deferredInstallPrompt) {
       deferredInstallPrompt.prompt();
     } else {
-      alert('Untuk memasang PWA di HP:\nBuka menu browser Anda (titik 3 atau tombol share) lalu pilih "Tambahkan ke Layar Utama / Add to Home screen".');
+      showToast('Buka menu browser Anda (titik 3/share) lalu pilih "Tambahkan ke Layar Utama".', 'info');
     }
   });
 }
@@ -1494,7 +1594,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const val = Number(document.getElementById('inputSettingBudget').value);
     if (val && val > 0) {
       setBudgetAmount(val);
-      alert('✅ Batas anggaran berhasil diperbarui!');
+      showToast('✅ Batas anggaran berhasil diperbarui!', 'success');
     }
   });
 
@@ -1508,6 +1608,17 @@ document.addEventListener('DOMContentLoaded', () => {
   budgetModalOverlay.addEventListener('click', (e) => {
     if (e.target === budgetModalOverlay) closeBudgetModal();
   });
+
+  // Confirm delete modal backdrop click
+  const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+  if (confirmDeleteModal) {
+    confirmDeleteModal.addEventListener('click', (e) => {
+      if (e.target === confirmDeleteModal) {
+        confirmDeleteModal.classList.remove('active');
+        activeConfirmCallback = null;
+      }
+    });
+  }
 });
 
 // ===================================================================
@@ -1517,7 +1628,9 @@ window.quickAddPreset = quickAddPreset;
 window.toggleItemCheck = toggleItemCheck;
 window.deleteGroceryItem = deleteGroceryItem;
 window.openEditItemModal = openEditItemModal;
-window.updateItemQty = updateItemQty;
+window.changeItemQty = changeItemQty;
+window.setItemQtyDirect = setItemQtyDirect;
+window.requestClearCart = requestClearCart;
 window.setBudgetAmount = setBudgetAmount;
 window.closeBudgetModal = closeBudgetModal;
 window.saveQuickBudget = saveQuickBudget;
@@ -1525,8 +1638,11 @@ window.selectDiscountMode = selectDiscountMode;
 window.addNominalToPrice = addNominalToPrice;
 window.setFormQty = setFormQty;
 window.deleteBenchmarkItem = deleteBenchmarkItem;
-window.useAsBenchmark = useAsBenchmark;
+window.useAsBenchmark = useHistoryAsCurrentBenchmark;
+window.useHistoryAsCurrentBenchmark = useHistoryAsCurrentBenchmark;
 window.deleteHistorySession = deleteHistorySession;
 window.closeItemModal = closeItemModal;
 window.openAddItemModal = openAddItemModal;
 window.resetDefaultCatalog = resetDefaultCatalog;
+window.showToast = showToast;
+window.openConfirmModal = openConfirmModal;

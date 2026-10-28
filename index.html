@@ -108,7 +108,13 @@
             <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--accent-cyan);flex-shrink:0;"></i>
             <div class="session-meta-content">
               <span class="meta-label">Lokasi Belanja</span>
-              <input type="text" id="inputStoreLocation" class="session-meta-input" placeholder="Superindo / Toko..." value="Supermarket">
+              <input type="text" id="inputStoreLocation" list="storeLocationList" class="session-meta-input" placeholder="Lotte Mart Grocery - Puri Indah" value="Lotte Mart Grocery - Puri Indah">
+              <datalist id="storeLocationList">
+                <option value="Lotte Mart Grocery - Puri Indah">
+                <option value="Superindo Kaliurang">
+                <option value="Indomaret Fresh">
+                <option value="Hypermart">
+              </datalist>
             </div>
           </div>
           <div class="session-divider"></div>
@@ -116,7 +122,7 @@
             <i data-lucide="calendar" style="width:15px;height:15px;color:var(--primary);flex-shrink:0;"></i>
             <div class="session-meta-content">
               <span class="meta-label">Tanggal Belanja</span>
-              <input type="date" id="inputShoppingDate" class="session-meta-input session-meta-date">
+              <input type="date" id="inputShoppingDate" class="session-meta-input session-meta-date" value="2026-10-26">
             </div>
           </div>
         </div>
@@ -135,32 +141,40 @@
           </div>
         </div>
 
-        <!-- Quick Recommendations for Boarding Students (Anak Rantau Presets) -->
+        <!-- Quick Recommendations for Boarding Students (Anak Rantau Presets - Skenario DT2) -->
         <div class="quick-presets-section">
           <div class="section-label-row">
-            <span class="section-label">⚡ Tambah Cepat Anak Rantau</span>
+            <span class="section-label">⚡ Tambah Cepat Anak Rantau (Skenario DT2)</span>
             <span style="font-size: 0.68rem; color: var(--text-muted);">Tap untuk isi otomatis</span>
           </div>
           <div class="horizontal-scroll-chips">
-            <button class="preset-chip" onclick="quickAddPreset('Beras Ramos 5kg', 'Bahan Pokok', 'kg', 5, 74000, 71000)">
-              🌾 Beras 5kg
+            <button class="preset-chip" onclick="quickAddPreset('Beras Rojolele', 'Bahan Pokok', 'karung/5kg', 1, 74000, 68000)">
+              🌾 Beras Rojolele Rp 74rb
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Telur Ayam 1kg', 'Bahan Pokok', 'kg', 1, 28000, 29500)">
-              🍳 Telur 1kg
+            <button class="preset-chip" onclick="quickAddPreset('Telur Ayam 1kg', 'Bahan Pokok', 'kg', 1, 28000, 32000)">
+              🍳 Telur 1kg Rp 28rb
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Minyak Goreng 2L', 'Bahan Pokok', 'liter', 2, 34500, 34500)">
-              🛢️ Minyak 2L
+            <button class="preset-chip" onclick="quickAddPreset('Garam 500g', 'Bumbu & Masak', 'pack', 1, 5000, 5000)">
+              🧂 Garam 500g Rp 5rb
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Indomie Goreng (5 pcs)', 'Makanan & Camilan', 'pack', 1, 15500, 15000)">
-              🍜 Indomie 5x
+            <button class="preset-chip" onclick="quickAddPreset('Minyak Goreng 2L', 'Bahan Pokok', 'liter', 1, 43000, 43000)">
+              🛢️ Minyak 2L Rp 43rb
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Sabun Mandi Refill 450ml', 'Kebersihan & Mandi', 'pack', 1, 22000, 26000, '50+20')">
-              🧼 Sabun Diskon
+            <button class="preset-chip" onclick="quickAddPreset('Sabun Cuci', 'Kebersihan & Mandi', 'pack', 1, 20000, 20000, '25')">
+              🧼 Sabun Cuci (Diskon 25%)
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Kopi Kapal Api 10x', 'Minuman', 'pack', 1, 13000, 13000)">
-              ☕ Kopi 10s
+            <button class="preset-chip" onclick="quickAddPreset('Wajan', 'Lainnya', 'pcs', 1, 100000, 100000, '50+20')">
+              🍳 Wajan (Promo 50%+20%)
             </button>
           </div>
+        </div>
+
+        <!-- Search & Filter Category Bar with Clear Cart Action -->
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+          <span style="font-size:0.75rem; font-weight:700; color:var(--text-secondary);"><i data-lucide="shopping-cart" style="width:13px;height:13px;display:inline-block;vertical-align:middle;"></i> Daftar Barang di Keranjang</span>
+          <button class="btn-clear-cart" id="btnClearCart" onclick="requestClearCart()" title="Kosongkan Keranjang Belanja">
+            <i data-lucide="trash-2" style="width:13px;height:13px;"></i> Kosongkan Troli
+          </button>
         </div>
 
         <!-- Search & Filter Category Bar -->
@@ -240,14 +254,14 @@
 
           <div class="form-group">
             <label class="form-label">Nominal Batas Dompet (Rp)</label>
-            <input type="number" id="inputSettingBudget" class="form-input" placeholder="750000" step="10000">
+            <input type="number" id="inputSettingBudget" class="form-input" placeholder="150000" step="10000" inputmode="numeric">
           </div>
 
           <div class="preset-budget-grid">
-            <button class="btn-budget-preset" onclick="setBudgetAmount(500000)">Rp 500.000<br><small style="color:var(--text-muted);">Super Hemat</small></button>
-            <button class="btn-budget-preset" onclick="setBudgetAmount(750000)">Rp 750.000<br><small style="color:var(--text-muted);">Standar Kos</small></button>
-            <button class="btn-budget-preset" onclick="setBudgetAmount(1000000)">Rp 1.000.000<br><small style="color:var(--text-muted);">Lengkap Bulanan</small></button>
-            <button class="btn-budget-preset" onclick="setBudgetAmount(1500000)">Rp 1.500.000<br><small style="color:var(--text-muted);">Stok Ekstra</small></button>
+            <button class="btn-budget-preset" onclick="setBudgetAmount(100000)">Rp 100.000<br><small style="color:var(--text-muted);">Uji DT2 Warning</small></button>
+            <button class="btn-budget-preset" onclick="setBudgetAmount(150000)">Rp 150.000<br><small style="color:var(--text-muted);">Uji DT2 F5</small></button>
+            <button class="btn-budget-preset" onclick="setBudgetAmount(350000)">Rp 350.000<br><small style="color:var(--text-muted);">Saku Kos Rian</small></button>
+            <button class="btn-budget-preset" onclick="setBudgetAmount(750000)">Rp 750.000<br><small style="color:var(--text-muted);">Standar Bulanan</small></button>
           </div>
 
           <button class="btn-submit-item" id="btnSaveBudgetSetting" style="margin-top: 4px;">
@@ -351,6 +365,8 @@
             <div class="form-group">
               <label class="form-label" for="selectUnit">Satuan</label>
               <select id="selectUnit" class="form-input">
+                <option value="karung/5kg">karung/5kg</option>
+                <option value="karung">karung</option>
                 <option value="pcs">pcs</option>
                 <option value="kg">kg</option>
                 <option value="liter">liter</option>
@@ -368,7 +384,7 @@
               <span>Harga Satuan Normal (Rp)</span>
               <span id="lblRefPriceHint" style="font-size:0.68rem;color:var(--accent-cyan);"></span>
             </div>
-            <input type="number" id="inputUnitPrice" class="form-input" placeholder="Contoh: 25000" required min="1" step="100">
+            <input type="number" id="inputUnitPrice" class="form-input" placeholder="Contoh: 25000" required min="1" step="100" inputmode="numeric">
             
             <!-- Quick Add Rupiah Chips -->
             <div class="quick-rupiah-chips">
@@ -390,7 +406,7 @@
             <div style="display: flex; align-items: center; gap: 12px;">
               <div class="stepper-container" style="flex: 1; padding: 4px;">
                 <button type="button" class="btn-stepper" id="btnFormQtyMinus" style="width: 44px; height: 44px;">-</button>
-                <input type="number" id="inputFormQty" class="stepper-value" value="1" min="1" max="999" style="background:transparent;border:none;font-size:1.2rem;width:100%;color:#fff;outline:none;" required>
+                <input type="number" id="inputFormQty" class="stepper-value" value="1" min="1" max="999" inputmode="numeric" style="background:transparent;border:none;font-size:1.2rem;width:100%;color:#fff;outline:none;" required>
                 <button type="button" class="btn-stepper" id="btnFormQtyPlus" style="width: 44px; height: 44px;">+</button>
               </div>
               <!-- Quick Qty buttons -->
@@ -423,7 +439,7 @@
             <div id="paneDiscSingle" style="display: none;">
               <div class="form-group">
                 <label class="form-label">Persentase Diskon (%)</label>
-                <input type="number" id="inputDiscSingle" class="form-input" placeholder="Contoh: 25" min="0" max="100" step="1">
+                <input type="number" id="inputDiscSingle" class="form-input" placeholder="Contoh: 25" min="0" max="100" step="1" inputmode="numeric">
               </div>
             </div>
 
@@ -433,12 +449,12 @@
                 <label class="form-label">Diskon Bertumpuk Supermarket (Contoh: 50% + 20%)</label>
                 <div class="stacked-discount-inputs">
                   <div>
-                    <input type="number" id="inputDiscTier1" class="form-input" placeholder="50%" min="0" max="100" step="1">
+                    <input type="number" id="inputDiscTier1" class="form-input" placeholder="50%" min="0" max="100" step="1" inputmode="numeric">
                     <span style="font-size:0.65rem; color:var(--text-muted);">Diskon ke-1</span>
                   </div>
                   <div class="discount-plus-symbol">+</div>
                   <div>
-                    <input type="number" id="inputDiscTier2" class="form-input" placeholder="20%" min="0" max="100" step="1">
+                    <input type="number" id="inputDiscTier2" class="form-input" placeholder="20%" min="0" max="100" step="1" inputmode="numeric">
                     <span style="font-size:0.65rem; color:var(--text-muted);">Diskon ke-2</span>
                   </div>
                 </div>
@@ -449,7 +465,7 @@
             <div id="paneDiscNominal" style="display: none;">
               <div class="form-group">
                 <label class="form-label">Potongan Harga Langsung (Rp per item)</label>
-                <input type="number" id="inputDiscNominal" class="form-input" placeholder="Contoh: 5000" min="0" step="500">
+                <input type="number" id="inputDiscNominal" class="form-input" placeholder="Contoh: 5000" min="0" step="500" inputmode="numeric">
               </div>
             </div>
 
@@ -491,11 +507,38 @@
           Masukkan batas maksimal pengeluaran belanja bulanan kali ini:
         </p>
         <div class="form-group">
-          <input type="number" id="quickBudgetInput" class="form-input" placeholder="750000" step="10000">
+          <input type="number" id="quickBudgetInput" class="form-input" placeholder="150000" step="10000" inputmode="numeric">
         </div>
         <button class="btn-submit-item" onclick="saveQuickBudget()">
           <i data-lucide="check"></i> Terapkan Batas
         </button>
+      </div>
+    </div>
+
+    <!-- Modal Konfirmasi Hapus Aman (Non-blocking Dialog UX) -->
+    <div class="modal-overlay" id="confirmDeleteModal">
+      <div class="mini-modal">
+        <div style="display:flex; align-items:center; gap:12px;">
+          <div style="width:40px; height:40px; border-radius:50%; background:rgba(239,68,68,0.15); display:flex; align-items:center; justify-content:center; color:var(--accent-rose); flex-shrink:0;">
+            <i data-lucide="alert-triangle" style="width:20px;height:20px;"></i>
+          </div>
+          <div>
+            <h3 id="confirmModalTitle" style="font-size:1.02rem; font-weight:700; color:#fff;">Konfirmasi Hapus</h3>
+            <p id="confirmModalDesc" style="font-size:0.75rem; color:var(--text-secondary); margin-top:2px;">Apakah Anda yakin?</p>
+          </div>
+        </div>
+        <div style="display:flex; gap:10px; margin-top:6px;">
+          <button type="button" class="btn-dialog-cancel" id="btnCancelConfirm">Batal</button>
+          <button type="button" class="btn-dialog-danger" id="btnExecuteConfirm">Ya, Hapus</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Non-Blocking In-App Toast Notification -->
+    <div class="toast-notification" id="appToast">
+      <div class="toast-content">
+        <i data-lucide="info" id="toastIcon" style="width:18px;height:18px;flex-shrink:0;"></i>
+        <span id="toastMessage">Pesan</span>
       </div>
     </div>
 
