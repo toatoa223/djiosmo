@@ -44,6 +44,10 @@
           </div>
         </div>
         <div class="header-actions">
+          <div class="sync-status-badge" id="syncStatusBadge" title="Status Realtime Multi-Device (Cloud Firestore)">
+            <span class="sync-dot live" id="syncStatusDot"></span>
+            <span class="sync-text" id="syncStatusText">Realtime</span>
+          </div>
           <button id="btnOpenBudgetModal" class="btn-icon-soft" title="Atur Limit Anggaran" aria-label="Atur Anggaran">
             <i data-lucide="sliders-horizontal"></i>
           </button>
@@ -97,6 +101,25 @@
            TAB 1: BELANJA (TROLI AKTIF)
            =================================================================== -->
       <div id="tab-belanja" class="tab-view active">
+
+        <!-- Sesi Belanja: Lokasi Toko & Tanggal (Tersinkron Realtime Multi-Device) -->
+        <div class="session-meta-card">
+          <div class="session-meta-item">
+            <i data-lucide="map-pin" style="width:15px;height:15px;color:var(--accent-cyan);flex-shrink:0;"></i>
+            <div class="session-meta-content">
+              <span class="meta-label">Lokasi Belanja</span>
+              <input type="text" id="inputStoreLocation" class="session-meta-input" placeholder="Superindo / Toko..." value="Supermarket">
+            </div>
+          </div>
+          <div class="session-divider"></div>
+          <div class="session-meta-item">
+            <i data-lucide="calendar" style="width:15px;height:15px;color:var(--primary);flex-shrink:0;"></i>
+            <div class="session-meta-content">
+              <span class="meta-label">Tanggal Belanja</span>
+              <input type="date" id="inputShoppingDate" class="session-meta-input session-meta-date">
+            </div>
+          </div>
+        </div>
         
         <!-- Metrics Strip (Total, Hemat Diskon, Qty) -->
         <div class="metrics-strip">
@@ -489,7 +512,7 @@
 
   </div>
 
-  <!-- App Core JavaScript Logic -->
-  <script src="./js/app.js"></script>
+  <!-- App Core JavaScript Logic (ES Module with Realtime Firestore) -->
+  <script type="module" src="./js/app.js"></script>
 </body>
 </html>

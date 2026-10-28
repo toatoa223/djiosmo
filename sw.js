@@ -1,9 +1,10 @@
-const CACHE_NAME = 'trolirantau-v1';
+const CACHE_NAME = 'trolirantau-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
   './css/style.css',
   './js/app.js',
+  './js/firebase-service.js',
   './manifest.json',
   './icons/app-icon.svg'
 ];

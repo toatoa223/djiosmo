@@ -1458,3 +1458,138 @@ body {
   display: flex;
   animation: fadeIn 0.3s ease;
 }
+
+
+/* ===================================================================
+   REALTIME MULTI-DEVICE CLOUD SYNC & SESSION META STYLES
+   =================================================================== */
+
+.sync-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.25);
+  padding: 3px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: #a7f3d0;
+  transition: all 0.25s ease;
+}
+
+.sync-status-badge.syncing {
+  background: rgba(245, 158, 11, 0.12);
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fde68a;
+}
+
+.sync-status-badge.offline {
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #fca5a5;
+}
+
+.sync-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--primary);
+  display: inline-block;
+  box-shadow: 0 0 8px var(--primary);
+}
+
+.sync-dot.live {
+  background-color: #10b981;
+  box-shadow: 0 0 8px #10b981;
+  animation: pulseSyncDot 2s infinite ease-in-out;
+}
+
+.sync-dot.syncing {
+  background-color: #f59e0b;
+  box-shadow: 0 0 8px #f59e0b;
+  animation: pulseSyncDot 0.8s infinite ease-in-out;
+}
+
+.sync-dot.offline {
+  background-color: #ef4444;
+  box-shadow: 0 0 6px #ef4444;
+  animation: none;
+}
+
+@keyframes pulseSyncDot {
+  0% { transform: scale(0.9); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.9); opacity: 0.7; }
+}
+
+/* Sesi Belanja: Store Location & Shopping Date Card */
+.session-meta-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+  box-shadow: var(--shadow-sm);
+  backdrop-filter: blur(8px);
+}
+
+.session-meta-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.session-meta-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 0;
+}
+
+.session-meta-content .meta-label {
+  font-size: 0.62rem;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.session-meta-input {
+  background: transparent;
+  border: none;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+  padding: 2px 0;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: var(--font-main);
+  outline: none;
+  width: 100%;
+  transition: border-color 0.2s ease;
+}
+
+.session-meta-input:focus {
+  border-bottom-color: var(--primary);
+}
+
+.session-meta-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+.session-meta-date {
+  color-scheme: dark;
+  font-size: 0.72rem;
+}
+
+.session-divider {
+  width: 1px;
+  height: 28px;
+  background: var(--border-subtle);
+}

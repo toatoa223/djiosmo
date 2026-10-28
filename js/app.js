@@ -1,7 +1,17 @@
 /**
  * SMART GROCERY & BUDGET SAFETY TRACKER (TroliRantau)
  * Architecture: Mobile PWA, Ergonomic Touch UI, Realtime Reactive State
+ * Multi-Device Sync: Cloud Firestore via onSnapshot() with LocalStorage Fallback
  */
+
+import { 
+  listenToActiveSession, 
+  saveActiveSessionToFirestore, 
+  archiveSessionToFirestore 
+} from './firebase-service.js';
+
+let isReceivingRemoteUpdate = false;
+let cloudSyncTimeout = null;
 
 // ===================================================================
 // CONSTANTS & INITIAL BENCHMARK SEEDS
@@ -88,6 +98,7 @@ const INITIAL_DEMO_HISTORY = [
   {
     id: 'hist-prev-month',
     date: '15 September 2026',
+    storeLocation: 'Supermarket',
     itemCount: 8,
     totalSpent: 485000,
     totalSaved: 42000,
@@ -107,6 +118,8 @@ const INITIAL_DEMO_HISTORY = [
 
 const state = {
   budgetLimit: 750000,
+  storeLocation: 'Supermarket',
+  shoppingDate: new Date().toISOString().split('T')[0],
   groceryItems: [],
   benchmarkCatalog: [],
   historySessions: [],
@@ -117,13 +130,19 @@ const state = {
 };
 
 // ===================================================================
-// STORAGE HELPERS
+// STORAGE & REALTIME CLOUD HELPERS
 // ===================================================================
 
 function loadStateFromStorage() {
   try {
     const savedLimit = localStorage.getItem('tr_budget_limit');
     if (savedLimit) state.budgetLimit = parseInt(savedLimit, 10);
+
+    const savedStore = localStorage.getItem('tr_store_location');
+    if (savedStore) state.storeLocation = savedStore;
+
+    const savedDate = localStorage.getItem('tr_shopping_date');
+    if (savedDate) state.shoppingDate = savedDate;
 
     const savedCatalog = localStorage.getItem('tr_benchmark_catalog');
     state.benchmarkCatalog = savedCatalog ? JSON.parse(savedCatalog) : DEFAULT_BENCHMARK_CATALOG;
@@ -144,11 +163,77 @@ function loadStateFromStorage() {
 function persistState() {
   try {
     localStorage.setItem('tr_budget_limit', state.budgetLimit.toString());
+    localStorage.setItem('tr_store_location', state.storeLocation);
+    localStorage.setItem('tr_shopping_date', state.shoppingDate);
     localStorage.setItem('tr_benchmark_catalog', JSON.stringify(state.benchmarkCatalog));
     localStorage.setItem('tr_grocery_items', JSON.stringify(state.groceryItems));
     localStorage.setItem('tr_history_sessions', JSON.stringify(state.historySessions));
   } catch (e) {
     console.error('Error saving state:', e);
+  }
+
+  // Sinkronkan ke Cloud Firestore secara realtime jika bukan dari update remote
+  if (!isReceivingRemoteUpdate) {
+    triggerCloudSync();
+  }
+}
+
+function updateSyncStatusUI(status, label) {
+  const badge = document.getElementById('syncStatusBadge');
+  const dot = document.getElementById('syncStatusDot');
+  const text = document.getElementById('syncStatusText');
+
+  if (!badge || !dot || !text) return;
+
+  badge.className = `sync-status-badge ${status}`;
+  dot.className = `sync-dot ${status}`;
+  text.textContent = label;
+}
+
+function triggerCloudSync() {
+  if (isReceivingRemoteUpdate) return;
+  if (cloudSyncTimeout) clearTimeout(cloudSyncTimeout);
+  
+  updateSyncStatusUI('syncing', 'Menyinkron...');
+
+  cloudSyncTimeout = setTimeout(async () => {
+    let totalSpent = 0;
+    let totalSavings = 0;
+
+    state.groceryItems.forEach(item => {
+      const calc = calculateItemPrice(item);
+      totalSpent += calc.lineSubtotal;
+      totalSavings += calc.lineSavings;
+    });
+
+    const payload = {
+      storeLocation: state.storeLocation || 'Supermarket',
+      shoppingDate: state.shoppingDate || new Date().toISOString().split('T')[0],
+      walletLimit: state.budgetLimit,
+      items: state.groceryItems,
+      totalSpent: totalSpent,
+      totalSavings: totalSavings
+    };
+
+    const res = await saveActiveSessionToFirestore(payload);
+    if (res && res.success) {
+      updateSyncStatusUI('live', 'Realtime Sync');
+    } else {
+      updateSyncStatusUI('offline', 'Offline (Lokal)');
+    }
+  }, 120);
+}
+
+function syncMetaControls() {
+  const inputStore = document.getElementById('inputStoreLocation');
+  const inputDate = document.getElementById('inputShoppingDate');
+
+  if (inputStore && document.activeElement !== inputStore) {
+    inputStore.value = state.storeLocation || 'Supermarket';
+  }
+
+  if (inputDate && document.activeElement !== inputDate) {
+    inputDate.value = state.shoppingDate || new Date().toISOString().split('T')[0];
   }
 }
 
@@ -934,6 +1019,7 @@ function finishShoppingSession() {
   const newSession = {
     id: 'hist-' + Date.now(),
     date: dateFormatted,
+    storeLocation: state.storeLocation || 'Supermarket',
     itemCount: state.groceryItems.length,
     totalSpent,
     totalSaved,
@@ -943,7 +1029,10 @@ function finishShoppingSession() {
 
   state.historySessions.unshift(newSession);
 
-  // Clear current trolley
+  // Arsipkan ke Firestore
+  archiveSessionToFirestore(newSession);
+
+  // Clear current trolley & sync ke Firestore
   state.groceryItems = [];
   persistState();
 
@@ -1258,6 +1347,74 @@ document.addEventListener('DOMContentLoaded', () => {
   renderCatalogList();
   renderHistoryView();
   updateSafetyBudgetBar();
+  syncMetaControls();
+
+  // Event Listeners for Store Location & Shopping Date
+  const inputStore = document.getElementById('inputStoreLocation');
+  const inputDate = document.getElementById('inputShoppingDate');
+
+  if (inputStore) {
+    inputStore.value = state.storeLocation || 'Supermarket';
+    inputStore.addEventListener('input', (e) => {
+      state.storeLocation = e.target.value.trim() || 'Supermarket';
+      persistState();
+    });
+  }
+
+  if (inputDate) {
+    inputDate.value = state.shoppingDate || new Date().toISOString().split('T')[0];
+    inputDate.addEventListener('change', (e) => {
+      state.shoppingDate = e.target.value || new Date().toISOString().split('T')[0];
+      persistState();
+    });
+  }
+
+  // ===================================================================
+  // REALTIME MULTI-DEVICE FIRESTORE LISTENER (onSnapshot)
+  // HP di Supermarket & PC di Rumah Tersinkron Otomatis Tanpa Refresh!
+  // ===================================================================
+  listenToActiveSession((remoteData, meta) => {
+    if (!remoteData) {
+      // Belum ada dokumen sesi aktif di Cloud Firestore, inisialisasi dari lokal
+      triggerCloudSync();
+      return;
+    }
+
+    // Hindari echo write-back saat menerima snapshot remote
+    isReceivingRemoteUpdate = true;
+    try {
+      if (remoteData.storeLocation !== undefined) state.storeLocation = remoteData.storeLocation;
+      if (remoteData.shoppingDate !== undefined) state.shoppingDate = remoteData.shoppingDate;
+      if (remoteData.walletLimit !== undefined) state.budgetLimit = Number(remoteData.walletLimit);
+      if (Array.isArray(remoteData.items)) state.groceryItems = remoteData.items;
+
+      // Update LocalStorage agar saat offline/F5 tetap aman
+      localStorage.setItem('tr_budget_limit', state.budgetLimit.toString());
+      localStorage.setItem('tr_store_location', state.storeLocation);
+      localStorage.setItem('tr_shopping_date', state.shoppingDate);
+      localStorage.setItem('tr_grocery_items', JSON.stringify(state.groceryItems));
+
+      // Re-render UI seketika di layar HP atau PC
+      syncMetaControls();
+      renderGroceryList();
+      updateSafetyBudgetBar();
+
+      if (meta && meta.fromCache) {
+        updateSyncStatusUI('offline', 'Cache Lokal (Offline)');
+      } else {
+        updateSyncStatusUI('live', 'Realtime Sync');
+      }
+    } catch (err) {
+      console.error('[Error applying remote snapshot]:', err);
+    } finally {
+      setTimeout(() => {
+        isReceivingRemoteUpdate = false;
+      }, 150);
+    }
+  }, (err) => {
+    console.warn('[Realtime Sync Warning]:', err);
+    updateSyncStatusUI('offline', 'Offline (Lokal)');
+  });
 
   // Bottom Navigation tabs click
   document.querySelectorAll('.nav-tab-btn').forEach(btn => {
@@ -1352,3 +1509,24 @@ document.addEventListener('DOMContentLoaded', () => {
     if (e.target === budgetModalOverlay) closeBudgetModal();
   });
 });
+
+// ===================================================================
+// GLOBAL WINDOW EXPORTS (ES Module compatibility for inline HTML onclick)
+// ===================================================================
+window.quickAddPreset = quickAddPreset;
+window.toggleItemCheck = toggleItemCheck;
+window.deleteGroceryItem = deleteGroceryItem;
+window.openEditItemModal = openEditItemModal;
+window.updateItemQty = updateItemQty;
+window.setBudgetAmount = setBudgetAmount;
+window.closeBudgetModal = closeBudgetModal;
+window.saveQuickBudget = saveQuickBudget;
+window.selectDiscountMode = selectDiscountMode;
+window.addNominalToPrice = addNominalToPrice;
+window.setFormQty = setFormQty;
+window.deleteBenchmarkItem = deleteBenchmarkItem;
+window.useAsBenchmark = useAsBenchmark;
+window.deleteHistorySession = deleteHistorySession;
+window.closeItemModal = closeItemModal;
+window.openAddItemModal = openAddItemModal;
+window.resetDefaultCatalog = resetDefaultCatalog;
