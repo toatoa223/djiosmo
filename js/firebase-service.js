@@ -81,12 +81,31 @@ export async function saveActiveSessionToFirestore(sessionPayload) {
   try {
     const sessionDocRef = doc(db, SESSIONS_COLLECTION, ACTIVE_SESSION_DOC);
     
-    // Pastikan data yang dikirim bersih dan serializable
+    // Pastikan seluruh struktur data bersih, serializable, dan memiliki tipe data valid
+    const cleanItems = (Array.isArray(sessionPayload.items) ? sessionPayload.items : []).map(item => ({
+      id: String(item.id || ('item-' + Date.now())),
+      name: String(item.name || 'Barang'),
+      category: String(item.category || 'Bahan Pokok'),
+      unit: String(item.unit || 'pcs'),
+      qty: Math.max(1, Number(item.qty) || 1),
+      unitPrice: Number(item.unitPrice) || 0,
+      discountMode: String(item.discountMode || 'NONE'),
+      discountSingle: Number(item.discountSingle) || 0,
+      discountTier1: Number(item.discountTier1) || 0,
+      discountTier2: Number(item.discountTier2) || 0,
+      discountNominal: Number(item.discountNominal) || 0,
+      cleanUnitPrice: Number(item.cleanUnitPrice !== undefined ? item.cleanUnitPrice : item.unitPrice) || 0,
+      lineSubtotal: Number(item.lineSubtotal !== undefined ? item.lineSubtotal : ((Number(item.unitPrice) || 0) * (Number(item.qty) || 1))) || 0,
+      lineSavings: Number(item.lineSavings) || 0,
+      isChecked: Boolean(item.isChecked),
+      addedAt: String(item.addedAt || new Date().toISOString())
+    }));
+
     const cleanPayload = {
-      storeLocation: sessionPayload.storeLocation || 'Supermarket',
-      shoppingDate: sessionPayload.shoppingDate || new Date().toISOString().split('T')[0],
+      storeLocation: String(sessionPayload.storeLocation || 'Supermarket'),
+      shoppingDate: String(sessionPayload.shoppingDate || new Date().toISOString().split('T')[0]),
       walletLimit: Number(sessionPayload.walletLimit || sessionPayload.budgetLimit || 750000),
-      items: Array.isArray(sessionPayload.items) ? sessionPayload.items : [],
+      items: cleanItems,
       totalSpent: Number(sessionPayload.totalSpent || 0),
       totalSavings: Number(sessionPayload.totalSavings || 0),
       updatedAt: serverTimestamp(),

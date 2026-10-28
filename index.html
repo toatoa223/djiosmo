@@ -148,23 +148,17 @@
             <span style="font-size: 0.68rem; color: var(--text-muted);">Tap untuk isi otomatis</span>
           </div>
           <div class="horizontal-scroll-chips">
-            <button class="preset-chip" onclick="quickAddPreset('Beras Rojolele', 'Bahan Pokok', 'karung/5kg', 1, 74000, 68000)">
-              🌾 Beras Rojolele Rp 74rb
+            <button class="preset-chip" onclick="quickAddPreset('Beras 5kg', 'Bahan Pokok', 'kg', 1, 68000, 68000)">
+              🌾 Beras 5kg
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Telur Ayam 1kg', 'Bahan Pokok', 'kg', 1, 28000, 32000)">
-              🍳 Telur 1kg Rp 28rb
+            <button class="preset-chip" onclick="quickAddPreset('Telur 1kg', 'Bahan Pokok', 'kg', 1, 28000, 32000)">
+              🥚 Telur 1kg
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Garam 500g', 'Bumbu & Masak', 'pack', 1, 5000, 5000)">
-              🧂 Garam 500g Rp 5rb
+            <button class="preset-chip" onclick="quickAddPreset('Minyak 2L', 'Bahan Pokok', 'liter', 1, 34500, 43000)">
+              🛢️ Minyak 2L
             </button>
-            <button class="preset-chip" onclick="quickAddPreset('Minyak Goreng 2L', 'Bahan Pokok', 'liter', 1, 43000, 43000)">
-              🛢️ Minyak 2L Rp 43rb
-            </button>
-            <button class="preset-chip" onclick="quickAddPreset('Sabun Cuci', 'Kebersihan & Mandi', 'pack', 1, 20000, 20000, '25')">
-              🧼 Sabun Cuci (Diskon 25%)
-            </button>
-            <button class="preset-chip" onclick="quickAddPreset('Wajan', 'Lainnya', 'pcs', 1, 100000, 100000, '50+20')">
-              🍳 Wajan (Promo 50%+20%)
+            <button class="preset-chip" onclick="quickAddPreset('Indomie 5x', 'Makanan', 'pack', 1, 14500, 15000)">
+              🍜 Indomie 5x
             </button>
           </div>
         </div>
@@ -181,16 +175,15 @@
         <div class="filter-search-container">
           <div class="search-input-box">
             <i data-lucide="search"></i>
-            <input type="text" id="searchInput" placeholder="Cari barang di troli..." autocomplete="off">
+            <input type="text" id="searchInput" placeholder="Cari barang di supermarket (misal: mie, minyak, kopi)..." autocomplete="off">
           </div>
           <div class="category-chips" id="categoryChips">
             <button class="cat-pill active" data-category="ALL">Semua</button>
             <button class="cat-pill" data-category="Bahan Pokok">Bahan Pokok</button>
-            <button class="cat-pill" data-category="Makanan & Camilan">Makanan</button>
+            <button class="cat-pill" data-category="Makanan">Makanan</button>
             <button class="cat-pill" data-category="Minuman">Minuman</button>
-            <button class="cat-pill" data-category="Kebersihan & Mandi">Kebersihan</button>
-            <button class="cat-pill" data-category="Bumbu & Masak">Bumbu</button>
-            <button class="cat-pill" data-category="Lainnya">Lainnya</button>
+            <button class="cat-pill" data-category="Kebersihan">Kebersihan</button>
+            <button class="cat-pill" data-category="Bumbu">Bumbu</button>
           </div>
         </div>
 
@@ -253,18 +246,26 @@
           </p>
 
           <div class="form-group">
-            <label class="form-label">Nominal Batas Dompet (Rp)</label>
-            <input type="number" id="inputSettingBudget" class="form-input" placeholder="150000" step="10000" inputmode="numeric">
+            <label class="form-label" for="inputSettingBudget">Nominal Batas Dompet (Rp)</label>
+            <input type="text" id="inputSettingBudget" class="form-input" placeholder="Contoh: 750000" inputmode="numeric" autocomplete="off">
           </div>
 
-          <div class="preset-budget-grid">
-            <button class="btn-budget-preset" onclick="setBudgetAmount(100000)">Rp 100.000<br><small style="color:var(--text-muted);">Uji DT2 Warning</small></button>
-            <button class="btn-budget-preset" onclick="setBudgetAmount(150000)">Rp 150.000<br><small style="color:var(--text-muted);">Uji DT2 F5</small></button>
-            <button class="btn-budget-preset" onclick="setBudgetAmount(350000)">Rp 350.000<br><small style="color:var(--text-muted);">Saku Kos Rian</small></button>
-            <button class="btn-budget-preset" onclick="setBudgetAmount(750000)">Rp 750.000<br><small style="color:var(--text-muted);">Standar Bulanan</small></button>
+          <div class="preset-budget-grid" id="presetBudgetGrid">
+            <button type="button" class="btn-budget-preset" data-amount="500000" onclick="selectBudgetPreset(500000)">
+              Rp 500.000<br><small style="color:var(--text-muted);font-weight:400;">Super Hemat</small>
+            </button>
+            <button type="button" class="btn-budget-preset" data-amount="750000" onclick="selectBudgetPreset(750000)">
+              Rp 750.000<br><small style="color:var(--text-muted);font-weight:400;">Standar Kos</small>
+            </button>
+            <button type="button" class="btn-budget-preset" data-amount="1000000" onclick="selectBudgetPreset(1000000)">
+              Rp 1.000.000<br><small style="color:var(--text-muted);font-weight:400;">Lengkap Bulanan</small>
+            </button>
+            <button type="button" class="btn-budget-preset" data-amount="1500000" onclick="selectBudgetPreset(1500000)">
+              Rp 1.500.000<br><small style="color:var(--text-muted);font-weight:400;">Stok Ekstra</small>
+            </button>
           </div>
 
-          <button class="btn-submit-item" id="btnSaveBudgetSetting" style="margin-top: 4px;">
+          <button type="button" class="btn-submit-item" id="btnSaveBudgetSetting" onclick="saveBudgetSetting()" style="margin-top: 4px;">
             <i data-lucide="save"></i> Simpan Batas Anggaran
           </button>
         </div>
@@ -355,11 +356,10 @@
               <label class="form-label" for="selectCategory">Kategori</label>
               <select id="selectCategory" class="form-input" style="padding-right: 28px;">
                 <option value="Bahan Pokok">Bahan Pokok</option>
-                <option value="Makanan & Camilan">Makanan</option>
+                <option value="Makanan">Makanan</option>
                 <option value="Minuman">Minuman</option>
-                <option value="Kebersihan & Mandi">Kebersihan</option>
-                <option value="Bumbu & Masak">Bumbu</option>
-                <option value="Lainnya">Lainnya</option>
+                <option value="Kebersihan">Kebersihan</option>
+                <option value="Bumbu">Bumbu</option>
               </select>
             </div>
             <div class="form-group">
@@ -388,10 +388,10 @@
             
             <!-- Quick Add Rupiah Chips -->
             <div class="quick-rupiah-chips">
-              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(5000)">+5rb</button>
-              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(10000)">+10rb</button>
-              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(25000)">+25rb</button>
-              <button type="button" class="chip-rupiah" onclick="addNominalToPrice(50000)">+50rb</button>
+              <button type="button" class="chip-rupiah btn-quick-price" data-add="5000" onclick="addNominalToPrice(5000)">+5rb</button>
+              <button type="button" class="chip-rupiah btn-quick-price" data-add="10000" onclick="addNominalToPrice(10000)">+10rb</button>
+              <button type="button" class="chip-rupiah btn-quick-price" data-add="25000" onclick="addNominalToPrice(25000)">+25rb</button>
+              <button type="button" class="chip-rupiah btn-quick-price" data-add="50000" onclick="addNominalToPrice(50000)">+50rb</button>
             </div>
 
             <!-- Realtime Price Comparator Feedback Alert -->
@@ -411,9 +411,9 @@
               </div>
               <!-- Quick Qty buttons -->
               <div style="display: flex; gap: 6px;">
-                <button type="button" class="chip-rupiah" onclick="setFormQty(2)">2x</button>
-                <button type="button" class="chip-rupiah" onclick="setFormQty(3)">3x</button>
-                <button type="button" class="chip-rupiah" onclick="setFormQty(5)">5x</button>
+                <button type="button" class="chip-rupiah btn-quick-qty" data-qty="2" onclick="setFormQty(2)">2x</button>
+                <button type="button" class="chip-rupiah btn-quick-qty" data-qty="3" onclick="setFormQty(3)">3x</button>
+                <button type="button" class="chip-rupiah btn-quick-qty" data-qty="5" onclick="setFormQty(5)">5x</button>
               </div>
             </div>
           </div>
@@ -488,7 +488,7 @@
 
           <!-- Bottom Action Buttons inside Form -->
           <div class="sheet-footer" style="padding: 10px 0 0;">
-            <button type="submit" class="btn-submit-item" id="btnSubmitItemForm">
+            <button type="submit" class="btn-submit-item" id="btnSubmitItemForm" onclick="saveGroceryItem(event)">
               <i data-lucide="check"></i> Simpan ke Troli
             </button>
           </div>
@@ -501,17 +501,19 @@
       <div class="mini-modal">
         <div style="display:flex; justify-content:space-between; align-items:center;">
           <h3 style="font-size:1.05rem; font-weight:700; color:#fff;">Ubah Limit Dompet</h3>
-          <button class="btn-card-action" onclick="closeBudgetModal()"><i data-lucide="x"></i></button>
+          <button class="btn-card-action" id="btnCloseBudgetModal" onclick="closeBudgetModal()"><i data-lucide="x"></i></button>
         </div>
         <p style="font-size:0.75rem; color:var(--text-secondary);">
           Masukkan batas maksimal pengeluaran belanja bulanan kali ini:
         </p>
-        <div class="form-group">
-          <input type="number" id="quickBudgetInput" class="form-input" placeholder="150000" step="10000" inputmode="numeric">
-        </div>
-        <button class="btn-submit-item" onclick="saveQuickBudget()">
-          <i data-lucide="check"></i> Terapkan Batas
-        </button>
+        <form id="quickBudgetForm" onsubmit="event.preventDefault(); saveQuickBudget();">
+          <div class="form-group">
+            <input type="text" id="quickBudgetInput" class="form-input" placeholder="Contoh: 75000" inputmode="numeric" required autocomplete="off">
+          </div>
+          <button type="submit" class="btn-submit-item" id="btnSaveQuickBudget" onclick="saveQuickBudget()">
+            <i data-lucide="check"></i> Terapkan Batas
+          </button>
+        </form>
       </div>
     </div>
 
