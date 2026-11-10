@@ -1928,6 +1928,15 @@ body {
   cursor: pointer;
   transition: all 0.15s ease;
   touch-action: manipulation;
+  user-select: none;
+}
+
+.btn-shopee-add * {
+  pointer-events: none;
+}
+
+.btn-stepper * {
+  pointer-events: none;
 }
 
 .btn-shopee-add:active {

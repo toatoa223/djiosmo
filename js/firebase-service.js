@@ -80,15 +80,21 @@ export function listenToActiveSession(onDataChange, onError) {
 export async function saveActiveSessionToFirestore(sessionPayload) {
   try {
     const sessionDocRef = doc(db, SESSIONS_COLLECTION, ACTIVE_SESSION_DOC);
+    const cartDocRef = doc(db, "carts", ACTIVE_SESSION_DOC);
     
     // Pastikan seluruh struktur data bersih, serializable, dan memiliki tipe data valid
     const cleanItems = (Array.isArray(sessionPayload.items) ? sessionPayload.items : []).map(item => ({
       id: String(item.id || ('item-' + Date.now())),
-      name: String(item.name || 'Barang'),
-      category: String(item.category || 'Bahan Pokok'),
-      unit: String(item.unit || 'pcs'),
+      productId: String(item.productId || item.id || ''),
+      name: String(item.name || item.nama || 'Barang'),
+      nama: String(item.nama || item.name || 'Barang'),
+      category: String(item.category || item.kategori || 'Bahan Pokok'),
+      kategori: String(item.kategori || item.category || 'Bahan Pokok'),
+      unit: String(item.unit || item.satuan || 'pcs'),
+      satuan: String(item.satuan || item.unit || 'pcs'),
       qty: Math.max(1, Number(item.qty) || 1),
-      unitPrice: Number(item.unitPrice) || 0,
+      unitPrice: Number(item.unitPrice !== undefined ? item.unitPrice : (item.harga || 0)),
+      harga: Number(item.harga !== undefined ? item.harga : (item.unitPrice || 0)),
       discountMode: String(item.discountMode || 'NONE'),
       discountSingle: Number(item.discountSingle) || 0,
       discountTier1: Number(item.discountTier1) || 0,
@@ -97,6 +103,8 @@ export async function saveActiveSessionToFirestore(sessionPayload) {
       cleanUnitPrice: Number(item.cleanUnitPrice !== undefined ? item.cleanUnitPrice : item.unitPrice) || 0,
       lineSubtotal: Number(item.lineSubtotal !== undefined ? item.lineSubtotal : ((Number(item.unitPrice) || 0) * (Number(item.qty) || 1))) || 0,
       lineSavings: Number(item.lineSavings) || 0,
+      icon: String(item.icon || item.gambar || '🛒'),
+      gambar: String(item.gambar || item.icon || '🛒'),
       isChecked: Boolean(item.isChecked),
       addedAt: String(item.addedAt || new Date().toISOString())
     }));
@@ -105,6 +113,7 @@ export async function saveActiveSessionToFirestore(sessionPayload) {
       storeLocation: String(sessionPayload.storeLocation || 'Supermarket'),
       shoppingDate: String(sessionPayload.shoppingDate || new Date().toISOString().split('T')[0]),
       walletLimit: Number(sessionPayload.walletLimit || sessionPayload.budgetLimit || 750000),
+      budgetLimit: Number(sessionPayload.walletLimit || sessionPayload.budgetLimit || 750000),
       items: cleanItems,
       totalSpent: Number(sessionPayload.totalSpent || 0),
       totalSavings: Number(sessionPayload.totalSavings || 0),
@@ -112,7 +121,10 @@ export async function saveActiveSessionToFirestore(sessionPayload) {
       lastClientTimestamp: Date.now()
     };
 
-    await setDoc(sessionDocRef, cleanPayload, { merge: true });
+    await Promise.all([
+      setDoc(sessionDocRef, cleanPayload, { merge: true }),
+      setDoc(cartDocRef, cleanPayload, { merge: true })
+    ]);
     return { success: true };
   } catch (err) {
     console.error('[Firestore Write Error - LocalStorage fallback active]:', err);

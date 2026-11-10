@@ -42,7 +42,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 68000,
     isPromo: true,
     isRecommended: true,
-    satuan: '@kg'
+    satuan: '@kg',
+    icon: '🌾',
+    gambar: '🌾'
   },
   {
     id: 'prod-bp-2',
@@ -52,7 +54,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 34500,
     isPromo: true,
     isRecommended: true,
-    satuan: '@liter'
+    satuan: '@liter',
+    icon: '🛢️',
+    gambar: '🛢️'
   },
   {
     id: 'prod-bp-3',
@@ -62,7 +66,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 28000,
     isPromo: true,
     isRecommended: true,
-    satuan: '@kg'
+    satuan: '@kg',
+    icon: '🥚',
+    gambar: '🥚'
   },
   {
     id: 'prod-bp-4',
@@ -72,7 +78,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@kg'
+    satuan: '@kg',
+    icon: '🧂',
+    gambar: '🧂'
   },
   {
     id: 'prod-bp-5',
@@ -82,7 +90,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 12500,
     isPromo: true,
     isRecommended: false,
-    satuan: '@kg'
+    satuan: '@kg',
+    icon: '🌾',
+    gambar: '🌾'
   },
   {
     id: 'prod-bp-6',
@@ -92,7 +102,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@liter'
+    satuan: '@liter',
+    icon: '🛢️',
+    gambar: '🛢️'
   },
   {
     id: 'prod-bp-7',
@@ -102,7 +114,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 39000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🌾',
+    gambar: '🌾'
   },
   {
     id: 'prod-bp-8',
@@ -112,7 +126,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 5000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧂',
+    gambar: '🧂'
   },
 
   // 2. MAKANAN (8 Produk)
@@ -124,7 +140,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 14500,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍜',
+    gambar: '🍜'
   },
   {
     id: 'prod-mk-2',
@@ -134,7 +152,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍜',
+    gambar: '🍜'
   },
   {
     id: 'prod-mk-3',
@@ -144,7 +164,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 22000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🐟',
+    gambar: '🐟'
   },
   {
     id: 'prod-mk-4',
@@ -154,7 +176,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 20000,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🥩',
+    gambar: '🥩'
   },
   {
     id: 'prod-mk-5',
@@ -164,7 +188,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍞',
+    gambar: '🍞'
   },
   {
     id: 'prod-mk-6',
@@ -174,7 +200,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 10500,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍪',
+    gambar: '🍪'
   },
   {
     id: 'prod-mk-7',
@@ -184,7 +212,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 41500,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🥣',
+    gambar: '🥣'
   },
   {
     id: 'prod-mk-8',
@@ -194,7 +224,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 47000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍗',
+    gambar: '🍗'
   },
 
   // 3. MINUMAN (8 Produk)
@@ -206,7 +238,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 13000,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '☕',
+    gambar: '☕'
   },
   {
     id: 'prod-mn-2',
@@ -216,7 +250,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 7000,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍵',
+    gambar: '🍵'
   },
   {
     id: 'prod-mn-3',
@@ -226,7 +262,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 18500,
     isPromo: true,
     isRecommended: true,
-    satuan: '@liter'
+    satuan: '@liter',
+    icon: '🥛',
+    gambar: '🥛'
   },
   {
     id: 'prod-mn-4',
@@ -236,7 +274,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '💧',
+    gambar: '💧'
   },
   {
     id: 'prod-mn-5',
@@ -246,7 +286,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 11800,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🥛',
+    gambar: '🥛'
   },
   {
     id: 'prod-mn-6',
@@ -256,7 +298,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 21000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🧃',
+    gambar: '🧃'
   },
   {
     id: 'prod-mn-7',
@@ -266,7 +310,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🥤',
+    gambar: '🥤'
   },
   {
     id: 'prod-mn-8',
@@ -276,7 +322,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 19000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '☕',
+    gambar: '☕'
   },
 
   // 4. KEBERSIHAN (8 Produk)
@@ -288,7 +336,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 21500,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧼',
+    gambar: '🧼'
   },
   {
     id: 'prod-kb-2',
@@ -298,7 +348,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 14000,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍋',
+    gambar: '🍋'
   },
   {
     id: 'prod-kb-3',
@@ -308,7 +360,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 13000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🪥',
+    gambar: '🪥'
   },
   {
     id: 'prod-kb-4',
@@ -318,7 +372,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 23500,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧼',
+    gambar: '🧼'
   },
   {
     id: 'prod-kb-5',
@@ -328,7 +384,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🧴',
+    gambar: '🧴'
   },
   {
     id: 'prod-kb-6',
@@ -338,7 +396,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 11000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧹',
+    gambar: '🧹'
   },
   {
     id: 'prod-kb-7',
@@ -348,7 +408,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 15500,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧻',
+    gambar: '🧻'
   },
   {
     id: 'prod-kb-8',
@@ -358,7 +420,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 18500,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🌸',
+    gambar: '🌸'
   },
 
   // 5. BUMBU (8 Produk)
@@ -370,7 +434,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 23000,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍾',
+    gambar: '🍾'
   },
   {
     id: 'prod-bm-2',
@@ -380,7 +446,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 13500,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧅',
+    gambar: '🧅'
   },
   {
     id: 'prod-bm-3',
@@ -390,7 +458,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧄',
+    gambar: '🧄'
   },
   {
     id: 'prod-bm-4',
@@ -400,7 +470,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 14000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🌶️',
+    gambar: '🌶️'
   },
   {
     id: 'prod-bm-5',
@@ -410,7 +482,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 9500,
     isPromo: true,
     isRecommended: true,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🍗',
+    gambar: '🍗'
   },
   {
     id: 'prod-bm-6',
@@ -420,7 +494,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: null,
     isPromo: false,
     isRecommended: false,
-    satuan: '@pcs'
+    satuan: '@pcs',
+    icon: '🍶',
+    gambar: '🍶'
   },
   {
     id: 'prod-bm-7',
@@ -430,7 +506,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 10000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🧂',
+    gambar: '🧂'
   },
   {
     id: 'prod-bm-8',
@@ -440,7 +518,9 @@ export const MASTER_PRODUCTS_CATALOG = [
     hargaPromo: 17000,
     isPromo: true,
     isRecommended: false,
-    satuan: '@pack'
+    satuan: '@pack',
+    icon: '🌶️',
+    gambar: '🌶️'
   }
 ];
 
@@ -574,7 +654,6 @@ function updateSyncStatusUI(status, label) {
 }
 
 function triggerCloudSync(immediate = false) {
-  if (isReceivingRemoteUpdate) return;
   if (cloudSyncTimeout) clearTimeout(cloudSyncTimeout);
   
   updateSyncStatusUI('syncing', 'Menyinkron...');
@@ -593,15 +672,21 @@ function triggerCloudSync(immediate = false) {
       storeLocation: state.storeLocation || 'Supermarket',
       shoppingDate: state.shoppingDate || new Date().toISOString().split('T')[0],
       walletLimit: Number(state.budgetLimit || 750000),
+      budgetLimit: Number(state.budgetLimit || 750000),
       items: state.groceryItems,
       totalSpent: totalSpent,
       totalSavings: totalSavings
     };
 
-    const res = await saveActiveSessionToFirestore(payload);
-    if (res && res.success) {
-      updateSyncStatusUI('live', 'Realtime Sync');
-    } else {
+    try {
+      const res = await saveActiveSessionToFirestore(payload);
+      if (res && res.success) {
+        updateSyncStatusUI('live', 'Realtime Sync');
+      } else {
+        updateSyncStatusUI('offline', 'Offline (Lokal)');
+      }
+    } catch (e) {
+      console.warn('[CloudSync Exception]:', e);
       updateSyncStatusUI('offline', 'Offline (Lokal)');
     }
   };
@@ -699,8 +784,9 @@ function requestClearCart() {
     message: 'Semua daftar belanjaan aktif akan dihapus permanen. Aksi ini aman dan dapat diisi kembali kapan saja.',
     onConfirm: () => {
       state.groceryItems = [];
-      persistState();
+      persistState(true);
       renderGroceryList();
+      updateSafetyBudgetBar();
       showToast('Seluruh isi keranjang belanja berhasil dikosongkan.', 'info');
     }
   });
@@ -948,63 +1034,155 @@ function updateSafetyBudgetBar() {
 // SHOPEE-STYLE CATALOG & CART RENDER HELPERS
 // ===================================================================
 
-function addCatalogProductToCart(productId) {
-  const prod = MASTER_PRODUCTS_CATALOG.find(p => p.id === productId);
+function addToCart(productOrId) {
+  let prod = null;
+  if (typeof productOrId === 'string') {
+    prod = MASTER_PRODUCTS_CATALOG.find(p => p.id === productOrId);
+    if (!prod) {
+      prod = state.benchmarkCatalog.find(b => b.id === productOrId || b.name.toLowerCase() === productOrId.toLowerCase());
+    }
+    if (!prod) {
+      prod = {
+        id: productOrId,
+        nama: productOrId,
+        name: productOrId,
+        kategori: 'Bahan Pokok',
+        category: 'Bahan Pokok',
+        harga: 10000,
+        unitPrice: 10000,
+        satuan: '@pcs',
+        unit: 'pcs',
+        icon: '🛒',
+        gambar: '🛒'
+      };
+    }
+  } else if (productOrId && typeof productOrId === 'object') {
+    prod = productOrId;
+  }
+
   if (!prod) return;
 
-  const existing = state.groceryItems.find(i => i.name.toLowerCase() === prod.nama.toLowerCase());
+  const prodName = prod.nama || prod.name || 'Barang';
+  const prodId = prod.id || ('prod-' + Date.now());
+  const prodCategory = prod.kategori || prod.category || 'Bahan Pokok';
+  const prodUnit = (prod.satuan || prod.unit || 'pcs').replace('@', '');
+  const prodIcon = prod.icon || prod.gambar || '🛒';
+
+  const basePrice = Number(prod.harga !== undefined ? prod.harga : (prod.unitPrice !== undefined ? prod.unitPrice : (prod.price || 0)));
+  const promoPrice = prod.hargaPromo ? Number(prod.hargaPromo) : null;
+  const hasPromo = promoPrice && promoPrice < basePrice;
+  const effectivePrice = hasPromo ? promoPrice : basePrice;
+
+  // Check if item already exists in current active cart
+  const existing = state.groceryItems.find(i => 
+    (i.productId && i.productId === prodId) || 
+    i.name.toLowerCase() === prodName.toLowerCase()
+  );
+
   if (existing) {
     existing.qty = (existing.qty || 1) + 1;
-    showToast(`Tambah 1x "${prod.nama}" (${existing.qty}x di troli)`, 'success');
+    const calc = calculateItemPrice(existing);
+    existing.lineSubtotal = calc.lineSubtotal;
+    existing.lineSavings = calc.lineSavings;
+    showToast(`Tambah 1x "${prodName}" (${existing.qty}x di troli)`, 'success');
   } else {
-    let unitPrice = prod.harga;
     let discountMode = 'NONE';
     let discountNominal = 0;
 
-    if (prod.hargaPromo && prod.hargaPromo < prod.harga) {
+    if (hasPromo) {
       discountMode = 'NOMINAL';
-      discountNominal = prod.harga - prod.hargaPromo;
+      discountNominal = basePrice - promoPrice;
     }
 
-    state.groceryItems.unshift({
+    const newItem = {
       id: 'item-' + Date.now() + '-' + Math.floor(Math.random() * 1000),
-      name: prod.nama,
-      category: prod.kategori,
-      unit: prod.satuan.replace('@', ''),
+      productId: prodId,
+      name: prodName,
+      nama: prodName,
+      category: prodCategory,
+      kategori: prodCategory,
+      unit: prodUnit,
+      satuan: prodUnit,
       qty: 1,
-      unitPrice: unitPrice,
+      unitPrice: basePrice,
+      harga: basePrice,
       discountMode: discountMode,
       discountSingle: 0,
       discountTier1: 0,
       discountTier2: 0,
       discountNominal: discountNominal,
+      cleanUnitPrice: effectivePrice,
+      lineSubtotal: effectivePrice,
+      lineSavings: discountNominal,
+      icon: prodIcon,
+      gambar: prodIcon,
       isChecked: false,
       addedAt: new Date().toISOString()
-    });
-    showToast(`✅ "${prod.nama}" dimasukkan ke troli!`, 'success');
+    };
+
+    state.groceryItems.unshift(newItem);
+    showToast(`✅ "${prodName}" dimasukkan ke troli!`, 'success');
   }
 
-  persistState();
+  // 1. Immediately persist to localStorage
+  // 2. Immediately write/update to Cloud Firestore (immediate = true)
+  persistState(true);
   renderGroceryList();
+  updateSafetyBudgetBar();
 }
+
+const addCatalogProductToCart = addToCart;
+
+function updateQty(itemId, delta) {
+  changeItemQty(itemId, delta);
+}
+
+function removeFromCart(itemId) {
+  const item = state.groceryItems.find(i => i.id === itemId);
+  if (!item) return;
+
+  const itemName = item.name;
+  state.groceryItems = state.groceryItems.filter(i => i.id !== itemId);
+  persistState(true);
+  renderGroceryList();
+  updateSafetyBudgetBar();
+  showToast(`"${itemName}" dihapus dari keranjang.`, 'info');
+}
+
+// Early window exports for catalog click handlers
+window.addToCart = addToCart;
+window.updateQty = updateQty;
+window.removeFromCart = removeFromCart;
+window.addCatalogProductToCart = addCatalogProductToCart;
 
 function changeCatalogProductQty(productId, delta) {
   const prod = MASTER_PRODUCTS_CATALOG.find(p => p.id === productId);
   if (!prod) return;
 
-  const existing = state.groceryItems.find(i => i.name.toLowerCase() === prod.nama.toLowerCase());
+  const existing = state.groceryItems.find(i => 
+    (i.productId && i.productId === prod.id) || 
+    i.name.toLowerCase() === prod.nama.toLowerCase()
+  );
   if (existing) {
-    changeItemQty(existing.id, delta);
+    updateQty(existing.id, delta);
   } else if (delta > 0) {
-    addCatalogProductToCart(productId);
+    addToCart(productId);
   }
 }
 
 function renderShopeePromoCard(prod) {
-  const cartItem = state.groceryItems.find(i => i.name.toLowerCase() === prod.nama.toLowerCase());
-  const hasPromo = prod.isPromo && prod.hargaPromo && prod.hargaPromo < prod.harga;
-  const displayPrice = hasPromo ? prod.hargaPromo : prod.harga;
-  const originalPriceHtml = hasPromo ? `<div class="shopee-original-price">${formatRupiah(prod.harga)}</div>` : '';
+  const prodId = prod.id;
+  const prodName = prod.nama || prod.name;
+  const cartItem = state.groceryItems.find(i => 
+    (i.productId && i.productId === prodId) || 
+    i.name.toLowerCase() === prodName.toLowerCase()
+  );
+
+  const basePrice = Number(prod.harga !== undefined ? prod.harga : prod.unitPrice || 0);
+  const promoPrice = prod.hargaPromo ? Number(prod.hargaPromo) : null;
+  const hasPromo = (prod.isPromo || promoPrice !== null) && promoPrice && promoPrice < basePrice;
+  const displayPrice = hasPromo ? promoPrice : basePrice;
+  const originalPriceHtml = hasPromo ? `<div class="shopee-original-price">${formatRupiah(basePrice)}</div>` : '';
   const badgeHtml = hasPromo
     ? `<span class="shopee-badge-promo">🔥 PROMO</span>`
     : (prod.isRecommended ? `<span class="shopee-badge-rec">⭐ REKOMENDASI</span>` : '');
@@ -1013,14 +1191,14 @@ function renderShopeePromoCard(prod) {
   if (cartItem) {
     actionHtml = `
       <div class="shopee-card-stepper">
-        <button class="btn-stepper btn-stepper-minus" onclick="changeItemQty('${cartItem.id}', -1)" title="Kurangi">-</button>
+        <button type="button" class="btn-stepper btn-stepper-minus" data-id="${cartItem.id}" data-delta="-1" onclick="updateQty('${cartItem.id}', -1)" title="Kurangi">-</button>
         <span class="stepper-value">${cartItem.qty}</span>
-        <button class="btn-stepper btn-stepper-plus" onclick="changeItemQty('${cartItem.id}', 1)" title="Tambah">+</button>
+        <button type="button" class="btn-stepper btn-stepper-plus" data-id="${cartItem.id}" data-delta="1" onclick="updateQty('${cartItem.id}', 1)" title="Tambah">+</button>
       </div>
     `;
   } else {
     actionHtml = `
-      <button class="btn-shopee-add" onclick="addCatalogProductToCart('${prod.id}')">
+      <button type="button" class="btn-shopee-add" data-id="${prod.id}" onclick="addToCart('${prod.id}')">
         <i data-lucide="plus" style="width:14px;height:14px;"></i> Keranjang
       </button>
     `;
@@ -1029,8 +1207,8 @@ function renderShopeePromoCard(prod) {
   return `
     <div class="shopee-promo-card">
       ${badgeHtml}
-      <div class="shopee-card-name" title="${prod.nama}">${prod.nama}</div>
-      <div class="shopee-card-meta">${prod.kategori} • ${prod.satuan}</div>
+      <div class="shopee-card-name" title="${prodName}">${prod.icon ? prod.icon + ' ' : ''}${prodName}</div>
+      <div class="shopee-card-meta">${prod.kategori || prod.category} • ${prod.satuan || prod.unit}</div>
       <div class="shopee-card-price-row">
         ${originalPriceHtml}
         <div class="shopee-promo-price">${formatRupiah(displayPrice)}</div>
@@ -1041,26 +1219,34 @@ function renderShopeePromoCard(prod) {
 }
 
 function renderShopeeCatalogItem(prod) {
-  const cartItem = state.groceryItems.find(i => i.name.toLowerCase() === prod.nama.toLowerCase());
-  const hasPromo = prod.isPromo && prod.hargaPromo && prod.hargaPromo < prod.harga;
-  const displayPrice = hasPromo ? prod.hargaPromo : prod.harga;
-  const originalPriceHtml = hasPromo ? `<span class="price-original-striked" style="font-size:0.7rem;margin-right:4px;">${formatRupiah(prod.harga)}</span>` : '';
+  const prodId = prod.id;
+  const prodName = prod.nama || prod.name;
+  const cartItem = state.groceryItems.find(i => 
+    (i.productId && i.productId === prodId) || 
+    i.name.toLowerCase() === prodName.toLowerCase()
+  );
+
+  const basePrice = Number(prod.harga !== undefined ? prod.harga : prod.unitPrice || 0);
+  const promoPrice = prod.hargaPromo ? Number(prod.hargaPromo) : null;
+  const hasPromo = (prod.isPromo || promoPrice !== null) && promoPrice && promoPrice < basePrice;
+  const displayPrice = hasPromo ? promoPrice : basePrice;
+  const originalPriceHtml = hasPromo ? `<span class="price-original-striked" style="font-size:0.7rem;margin-right:4px;">${formatRupiah(basePrice)}</span>` : '';
   const badgeTag = hasPromo 
-    ? `<span style="font-size:0.62rem;background:rgba(239,68,68,0.2);color:#ef4444;padding:1px 5px;border-radius:4px;font-weight:700;">Hemat ${formatRupiah(prod.harga - prod.hargaPromo)}</span>`
+    ? `<span style="font-size:0.62rem;background:rgba(239,68,68,0.2);color:#ef4444;padding:1px 5px;border-radius:4px;font-weight:700;">Hemat ${formatRupiah(basePrice - promoPrice)}</span>`
     : (prod.isRecommended ? `<span style="font-size:0.62rem;background:rgba(16,185,129,0.2);color:var(--primary);padding:1px 5px;border-radius:4px;font-weight:700;">Rekomendasi</span>` : '');
 
   let actionHtml = '';
   if (cartItem) {
     actionHtml = `
       <div class="stepper-container" style="padding:1px;">
-        <button class="btn-stepper btn-stepper-minus" onclick="changeItemQty('${cartItem.id}', -1)" style="width:36px;height:36px;min-width:36px;min-height:36px;font-size:1.1rem;">-</button>
+        <button type="button" class="btn-stepper btn-stepper-minus" data-id="${cartItem.id}" data-delta="-1" onclick="updateQty('${cartItem.id}', -1)" style="width:36px;height:36px;min-width:36px;min-height:36px;font-size:1.1rem;">-</button>
         <span class="stepper-value" style="min-width:32px;font-size:0.9rem;">${cartItem.qty}</span>
-        <button class="btn-stepper btn-stepper-plus" onclick="changeItemQty('${cartItem.id}', 1)" style="width:36px;height:36px;min-width:36px;min-height:36px;font-size:1.1rem;">+</button>
+        <button type="button" class="btn-stepper btn-stepper-plus" data-id="${cartItem.id}" data-delta="1" onclick="updateQty('${cartItem.id}', 1)" style="width:36px;height:36px;min-width:36px;min-height:36px;font-size:1.1rem;">+</button>
       </div>
     `;
   } else {
     actionHtml = `
-      <button class="btn-shopee-add" onclick="addCatalogProductToCart('${prod.id}')" style="width:auto;padding:0 14px;height:36px;">
+      <button type="button" class="btn-shopee-add" data-id="${prod.id}" onclick="addToCart('${prod.id}')" style="width:auto;padding:0 14px;height:36px;">
         <i data-lucide="plus" style="width:14px;height:14px;"></i> Tambah
       </button>
     `;
@@ -1069,11 +1255,11 @@ function renderShopeeCatalogItem(prod) {
   return `
     <div class="shopee-catalog-item">
       <div class="shopee-catalog-info">
-        <div class="shopee-catalog-title">${prod.nama}</div>
+        <div class="shopee-catalog-title">${prod.icon ? prod.icon + ' ' : ''}${prodName}</div>
         <div class="shopee-catalog-sub">
-          <span>${prod.kategori}</span>
+          <span>${prod.kategori || prod.category}</span>
           <span>•</span>
-          <span>${prod.satuan}</span>
+          <span>${prod.satuan || prod.unit}</span>
           ${badgeTag}
         </div>
         <div>
@@ -1125,7 +1311,7 @@ function renderCartGroceryItem(item) {
             <span class="badge-category">${item.category}</span>
             <span class="item-unit-badge">@${item.unit}</span>
           </div>
-          <div class="item-name">${item.name}</div>
+          <div class="item-name">${item.icon ? item.icon + ' ' : ''}${item.name}</div>
           ${compHtml}
           ${discountHtml}
         </div>
@@ -1142,9 +1328,9 @@ function renderCartGroceryItem(item) {
 
       <div class="grocery-card-bottom">
         <div class="stepper-container">
-          <button class="btn-stepper btn-stepper-minus" onclick="changeItemQty('${item.id}', -1)" title="Kurangi">-</button>
+          <button type="button" class="btn-stepper btn-stepper-minus" data-id="${item.id}" data-delta="-1" onclick="updateQty('${item.id}', -1)" title="Kurangi">-</button>
           <input type="number" inputmode="numeric" min="1" max="999" class="stepper-value-input" value="${item.qty}" onchange="setItemQtyDirect('${item.id}', this.value)" oninput="setItemQtyDirect('${item.id}', this.value)" title="Ketik kuantitas langsung">
-          <button class="btn-stepper btn-stepper-plus" onclick="changeItemQty('${item.id}', 1)" title="Tambah">+</button>
+          <button type="button" class="btn-stepper btn-stepper-plus" data-id="${item.id}" data-delta="1" onclick="updateQty('${item.id}', 1)" title="Tambah">+</button>
         </div>
 
         <div class="price-box">
@@ -1317,6 +1503,22 @@ function renderGroceryList() {
     </div>
   `;
 
+  // Tampilkan juga keranjang untuk kategori ini jika ada barang yang sudah dimasukkan
+  const catCartItems = state.groceryItems.filter(i => (i.category === filterCat || i.kategori === filterCat));
+  if (catCartItems.length > 0) {
+    html += `
+      <div class="shopee-section" style="margin-top: 18px;">
+        <div class="shopee-section-title">
+          <div class="shopee-title-text">
+            <i data-lucide="shopping-cart" style="color:var(--accent-amber);width:16px;height:16px;"></i>
+            Barang ${filterCat} di Keranjang (${catCartItems.length})
+          </div>
+        </div>
+        ${catCartItems.map(renderCartGroceryItem).join('')}
+      </div>
+    `;
+  }
+
   container.innerHTML = html;
   if (finishBox) finishBox.style.display = state.groceryItems.length > 0 ? 'flex' : 'none';
   refreshIcons();
@@ -1335,15 +1537,20 @@ function changeItemQty(itemId, delta) {
   if (newQty <= 0) {
     // Auto-remove item when reduced to 0
     state.groceryItems = state.groceryItems.filter(i => i.id !== itemId);
-    persistState();
+    persistState(true);
     renderGroceryList();
+    updateSafetyBudgetBar();
     showToast(`"${item.name}" dihapus dari keranjang.`, 'info');
     return;
   }
 
   item.qty = newQty;
-  persistState();
+  const calc = calculateItemPrice(item);
+  item.lineSubtotal = calc.lineSubtotal;
+  item.lineSavings = calc.lineSavings;
+  persistState(true);
   renderGroceryList();
+  updateSafetyBudgetBar();
 }
 
 function setItemQtyDirect(itemId, value) {
@@ -1353,8 +1560,12 @@ function setItemQtyDirect(itemId, value) {
   const parsed = parseInt(value, 10);
   if (!isNaN(parsed) && parsed > 0) {
     item.qty = parsed;
-    persistState();
+    const calc = calculateItemPrice(item);
+    item.lineSubtotal = calc.lineSubtotal;
+    item.lineSavings = calc.lineSavings;
+    persistState(true);
     renderGroceryList();
+    updateSafetyBudgetBar();
   }
 }
 
@@ -1363,7 +1574,7 @@ function toggleItemCheck(itemId) {
   if (!item) return;
 
   item.isChecked = !item.isChecked;
-  persistState();
+  persistState(true);
   renderGroceryList();
 }
 
@@ -1377,8 +1588,9 @@ function deleteGroceryItem(itemId) {
     message: `Hapus "${itemName}" dari daftar keranjang belanja?`,
     onConfirm: () => {
       state.groceryItems = state.groceryItems.filter(i => i.id !== itemId);
-      persistState();
+      persistState(true);
       renderGroceryList();
+      updateSafetyBudgetBar();
       showToast(`"${itemName}" dihapus dari keranjang.`, 'info');
     }
   });
@@ -1418,14 +1630,21 @@ function quickAddPreset(name, category, unit, qty, price, refPrice, discountTag 
   const existing = state.groceryItems.find(i => i.name.toLowerCase() === name.toLowerCase());
   if (existing) {
     existing.qty += qty;
+    const calc = calculateItemPrice(existing);
+    existing.lineSubtotal = calc.lineSubtotal;
+    existing.lineSavings = calc.lineSavings;
   } else {
-    state.groceryItems.unshift({
+    const newItem = {
       id: 'item-' + Date.now(),
       name,
+      nama: name,
       category,
+      kategori: category,
       unit,
+      satuan: unit,
       qty,
       unitPrice: price,
+      harga: price,
       discountMode,
       discountSingle: dSingle,
       discountTier1: t1,
@@ -1433,11 +1652,17 @@ function quickAddPreset(name, category, unit, qty, price, refPrice, discountTag 
       discountNominal: 0,
       isChecked: false,
       addedAt: new Date().toISOString()
-    });
+    };
+    const calc = calculateItemPrice(newItem);
+    newItem.lineSubtotal = calc.lineSubtotal;
+    newItem.lineSavings = calc.lineSavings;
+    newItem.cleanUnitPrice = calc.cleanUnitPrice;
+    state.groceryItems.unshift(newItem);
   }
 
-  persistState();
+  persistState(true);
   renderGroceryList();
+  updateSafetyBudgetBar();
   highlightNewlyAddedItem(name);
   showToast(`"${name}" berhasil ditambahkan ke troli!`, 'success');
 }
@@ -1766,7 +1991,7 @@ function saveGroceryItem(e) {
   }
 
   // Simpan ke storage dan database Firestore
-  persistState();
+  persistState(true);
 
   // Reset input form
   if (inputItemName) inputItemName.value = '';
@@ -1854,7 +2079,8 @@ function finishShoppingSession() {
 
   // Clear current trolley & sync ke Firestore
   state.groceryItems = [];
-  persistState();
+  persistState(true);
+  updateSafetyBudgetBar();
 
   showToast(`🎉 Belanja Berhasil Disimpan! Total: ${formatRupiah(totalSpent)}`, 'success');
 
@@ -2176,8 +2402,8 @@ function saveQuickBudget() {
     return;
   }
 
-  // 1. Update Global State, persist & recalculate
-  setBudgetAmount(parsed);
+  // 1. Update Global State, persist & recalculate (immediate Firestore sync)
+  setBudgetAmount(parsed, true);
 
   // 2. UI feedback
   showToast(`✅ Limit dompet diubah: ${formatRupiah(parsed)}`, 'success');
@@ -2317,20 +2543,32 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
+    // Lewati snapshot lokal yang masih pending dari device ini (hindari flicker & race-condition)
+    if (meta && meta.hasPendingWrites) {
+      return;
+    }
+
     // Hindari echo write-back saat menerima snapshot remote
     isReceivingRemoteUpdate = true;
     try {
       if (remoteData.storeLocation !== undefined) state.storeLocation = String(remoteData.storeLocation);
       if (remoteData.shoppingDate !== undefined) state.shoppingDate = String(remoteData.shoppingDate);
       if (remoteData.walletLimit !== undefined) state.budgetLimit = Number(remoteData.walletLimit);
+      else if (remoteData.budgetLimit !== undefined) state.budgetLimit = Number(remoteData.budgetLimit);
+
       if (Array.isArray(remoteData.items)) {
         state.groceryItems = remoteData.items.map(item => ({
           id: String(item.id || ('item-' + Date.now())),
-          name: String(item.name || ''),
-          category: String(item.category || 'Bahan Pokok'),
-          unit: String(item.unit || 'pcs'),
+          productId: String(item.productId || item.id || ''),
+          name: String(item.name || item.nama || ''),
+          nama: String(item.nama || item.name || ''),
+          category: String(item.category || item.kategori || 'Bahan Pokok'),
+          kategori: String(item.kategori || item.category || 'Bahan Pokok'),
+          unit: String(item.unit || item.satuan || 'pcs'),
+          satuan: String(item.satuan || item.unit || 'pcs'),
           qty: Math.max(1, Number(item.qty) || 1),
-          unitPrice: Number(item.unitPrice) || 0,
+          unitPrice: Number(item.unitPrice !== undefined ? item.unitPrice : (item.harga || 0)),
+          harga: Number(item.harga !== undefined ? item.harga : (item.unitPrice || 0)),
           discountMode: item.discountMode || 'NONE',
           discountSingle: Number(item.discountSingle) || 0,
           discountTier1: Number(item.discountTier1) || 0,
@@ -2339,6 +2577,8 @@ document.addEventListener('DOMContentLoaded', () => {
           cleanUnitPrice: Number(item.cleanUnitPrice !== undefined ? item.cleanUnitPrice : item.unitPrice) || 0,
           lineSubtotal: Number(item.lineSubtotal) || 0,
           lineSavings: Number(item.lineSavings) || 0,
+          icon: String(item.icon || item.gambar || '🛒'),
+          gambar: String(item.gambar || item.icon || '🛒'),
           isChecked: Boolean(item.isChecked),
           addedAt: item.addedAt || new Date().toISOString()
         }));
@@ -2354,6 +2594,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const settingInput = document.getElementById('inputSettingBudget');
       if (settingInput && document.activeElement !== settingInput) {
         settingInput.value = state.budgetLimit;
+      }
+      const quickInput = document.getElementById('quickBudgetInput');
+      if (quickInput && document.activeElement !== quickInput) {
+        quickInput.value = state.budgetLimit;
       }
       updatePresetButtonsUI(state.budgetLimit);
 
@@ -2578,6 +2822,34 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+  // Delegated click handler for Shopee Catalog Add & Stepper buttons
+  document.addEventListener('click', (e) => {
+    // 1. Add to cart button (+ Tambah / + Keranjang)
+    const addBtn = e.target.closest('.btn-shopee-add');
+    if (addBtn) {
+      const prodId = addBtn.getAttribute('data-id');
+      if (prodId) {
+        e.preventDefault();
+        e.stopPropagation();
+        addToCart(prodId);
+        return;
+      }
+    }
+
+    // 2. Stepper buttons (+ / -)
+    const stepperBtn = e.target.closest('.btn-stepper-plus, .btn-stepper-minus');
+    if (stepperBtn && stepperBtn.hasAttribute('data-id') && stepperBtn.hasAttribute('data-delta')) {
+      const itemId = stepperBtn.getAttribute('data-id');
+      const delta = parseInt(stepperBtn.getAttribute('data-delta'), 10);
+      if (itemId && !isNaN(delta)) {
+        e.preventDefault();
+        e.stopPropagation();
+        updateQty(itemId, delta);
+        return;
+      }
+    }
+  });
+
   // Initial visual active state for preset buttons
   updatePresetButtonsUI(state.budgetLimit);
 });
@@ -2585,6 +2857,11 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===================================================================
 // GLOBAL WINDOW EXPORTS (ES Module compatibility for inline HTML onclick)
 // ===================================================================
+window.addToCart = addToCart;
+window.updateQty = updateQty;
+window.removeFromCart = removeFromCart;
+window.addCatalogProductToCart = addCatalogProductToCart;
+window.changeCatalogProductQty = changeCatalogProductQty;
 window.saveGroceryItem = saveGroceryItem;
 window.quickAddPreset = quickAddPreset;
 window.toggleItemCheck = toggleItemCheck;
@@ -2613,6 +2890,17 @@ window.openAddItemModal = openAddItemModal;
 window.resetDefaultCatalog = resetDefaultCatalog;
 window.showToast = showToast;
 window.openConfirmModal = openConfirmModal;
-window.addCatalogProductToCart = addCatalogProductToCart;
-window.changeCatalogProductQty = changeCatalogProductQty;
 window.MASTER_PRODUCTS_CATALOG = MASTER_PRODUCTS_CATALOG;
+
+export {
+  addToCart,
+  updateQty,
+  removeFromCart,
+  addCatalogProductToCart,
+  changeCatalogProductQty,
+  changeItemQty,
+  setItemQtyDirect,
+  saveGroceryItem,
+  quickAddPreset,
+  setBudgetAmount
+};

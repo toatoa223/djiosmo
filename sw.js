@@ -1,4 +1,4 @@
-const CACHE_NAME = 'trolirantau-v7';
+const CACHE_NAME = 'trolirantau-v9';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -10,10 +10,11 @@ const ASSETS_TO_CACHE = [
 ];
 
 self.addEventListener('install', (event) => {
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
       return cache.addAll(ASSETS_TO_CACHE);
-    }).then(() => self.skipWaiting())
+    })
   );
 });
 
@@ -32,15 +33,26 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
-  // Offline-first strategy for cached assets, network fallback
+  if (event.request.method !== 'GET') return;
+  const url = new URL(event.request.url);
+
+  // External requests (Firebase Firestore, Google APIs, Lucide CDN, Google Fonts) bypass cache
+  if (url.origin !== location.origin) {
+    return;
+  }
+
+  // Network-First for same-origin app files (ensures PC and Phone always run the latest code)
   event.respondWith(
-    caches.match(event.request).then((response) => {
-      return response || fetch(event.request).catch(() => {
-        // Fallback for html navigation
-        if (event.request.mode === 'navigate') {
-          return caches.match('./index.html');
+    fetch(event.request)
+      .then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const responseToCache = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseToCache);
+          });
         }
-      });
-    })
+        return networkResponse;
+      })
+      .catch(() => caches.match(event.request).then((cached) => cached || caches.match('./index.html')))
   );
 });
