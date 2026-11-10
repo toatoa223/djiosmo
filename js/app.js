@@ -712,6 +712,103 @@ function syncMetaControls() {
 }
 
 // ===================================================================
+// WEB AUDIO API SOUND GENERATOR (100% Reliable Native Synthesis)
+// Hemat resource, tanpa file mp3 luar, dan responsif instan
+// ===================================================================
+
+let audioCtx = null;
+let lastClickSoundTime = 0;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (AudioContextClass) {
+      audioCtx = new AudioContextClass();
+    }
+  }
+  if (audioCtx && audioCtx.state === 'suspended') {
+    audioCtx.resume().catch(() => {});
+  }
+  return audioCtx;
+}
+
+/**
+ * Click / Pop SFX: Suara klik/pop halus dan singkat
+ * Sine wave frequency ~800Hz, durasi 0.05 detik
+ */
+function playClickSound() {
+  const nowMs = performance.now();
+  if (nowMs - lastClickSoundTime < 35) return;
+  lastClickSoundTime = nowMs;
+
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    osc.type = 'sine';
+    const now = ctx.currentTime;
+    // Pop halus: 820Hz turun ke 420Hz dalam 0.05 detik
+    osc.frequency.setValueAtTime(820, now);
+    osc.frequency.exponentialRampToValueAtTime(420, now + 0.05);
+
+    // Gain envelope halus untuk mencegah clicking noise
+    gain.gain.setValueAtTime(0.18, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start(now);
+    osc.stop(now + 0.05);
+  } catch (err) {
+    // Non-blocking fallback
+  }
+}
+
+/**
+ * Overbudget Alert SFX: Suara peringatan dua nada 'beep-beep'
+ * Tegas, jelas, dan memberi penanda visual & audio seketika
+ */
+function playOverbudgetSound() {
+  try {
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    const now = ctx.currentTime;
+    // Beep 1: 520Hz (0.11s)
+    playWarningBeep(ctx, 520, now, 0.11);
+    // Beep 2: 780Hz (0.14s) dengan jeda singkat
+    playWarningBeep(ctx, 780, now + 0.16, 0.14);
+  } catch (err) {
+    // Non-blocking fallback
+  }
+}
+
+function playWarningBeep(ctx, freq, startTime, duration) {
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(freq, startTime);
+
+  gain.gain.setValueAtTime(0.22, startTime);
+  gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
+
+  osc.connect(gain);
+  gain.connect(ctx.destination);
+
+  osc.start(startTime);
+  osc.stop(startTime + duration);
+}
+
+// Early window exports for sound effects
+window.playClickSound = playClickSound;
+window.playOverbudgetSound = playOverbudgetSound;
+
+// ===================================================================
 // NON-BLOCKING TOAST & CONFIRMATION MODAL (UX COMPLIANCE)
 // ===================================================================
 
@@ -936,6 +1033,8 @@ function compareWithLastMonth(productName, currentUnitPrice) {
 // REALTIME SAFETY CAP / BUDGET CALCULATOR & CONTROLLER
 // ===================================================================
 
+let wasOverbudget = false;
+
 function updateSafetyBudgetBar() {
   let totalSpent = 0;
   let totalSavings = 0;
@@ -987,12 +1086,14 @@ function updateSafetyBudgetBar() {
   safetyCard.classList.remove('state-safe', 'state-warning', 'state-danger');
 
   if (percentage < 90) {
+    wasOverbudget = false;
     safetyCard.classList.add('state-safe');
     safetyBadge.className = 'safety-badge badge-safe';
     safetyBadge.innerHTML = '<i data-lucide="shield-check" style="width:12px;height:12px;"></i> Aman';
     lblAdvice.textContent = 'Keranjang masih santai 👍';
     lblRemaining.style.color = 'var(--primary)';
   } else if (percentage <= 100) {
+    wasOverbudget = false;
     safetyCard.classList.add('state-warning');
     safetyBadge.className = 'safety-badge badge-warning';
     safetyBadge.innerHTML = '<i data-lucide="alert-triangle" style="width:12px;height:12px;"></i> Peringatan Waspada';
@@ -1004,6 +1105,12 @@ function updateSafetyBudgetBar() {
     safetyBadge.innerHTML = '<i data-lucide="siren" style="width:12px;height:12px;"></i> Over Budget!';
     lblAdvice.textContent = 'Total belanja melebihi batas saldo dompet! Kurangi kuantitas atau batalkan barang sekunder.';
     lblRemaining.style.color = 'var(--accent-rose)';
+
+    // Trigger Overbudget Alert Sound (hanya berbunyi saat status berubah menjadi overbudget)
+    if (!wasOverbudget) {
+      playOverbudgetSound();
+      wasOverbudget = true;
+    }
 
     // Trigger haptic vibration if supported (useful on real phones)
     if (navigator.vibrate) {
@@ -2901,6 +3008,19 @@ document.addEventListener('DOMContentLoaded', () => {
     groceryContainer.addEventListener('click', handleUnifiedCatalogInteraction, true);
   }
 
+  // Global interactive click sound for all buttons, chips, tabs, and toggles
+  document.addEventListener('click', (e) => {
+    const targetElement = (e.target && e.target.nodeType === 3)
+      ? e.target.parentElement
+      : (e.target instanceof Element ? e.target : null);
+    if (!targetElement) return;
+
+    const interactive = targetElement.closest('button, .cat-pill, .preset-chip, .trolley-check-btn, .btn-disc-tab, .btn-quick-qty, .btn-budget-preset, .nav-tab-btn, .chip-rupiah, .btn-card-action, .budget-limit-btn, a');
+    if (interactive) {
+      playClickSound();
+    }
+  }, true);
+
   // Initial visual active state for preset buttons
   updatePresetButtonsUI(state.budgetLimit);
 });
@@ -2908,6 +3028,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // ===================================================================
 // GLOBAL WINDOW EXPORTS (ES Module compatibility for inline HTML onclick)
 // ===================================================================
+window.playClickSound = playClickSound;
+window.playOverbudgetSound = playOverbudgetSound;
 window.addToCart = addToCart;
 window.updateQty = updateQty;
 window.removeFromCart = removeFromCart;
@@ -2944,6 +3066,8 @@ window.openConfirmModal = openConfirmModal;
 window.MASTER_PRODUCTS_CATALOG = MASTER_PRODUCTS_CATALOG;
 
 export {
+  playClickSound,
+  playOverbudgetSound,
   addToCart,
   updateQty,
   removeFromCart,
