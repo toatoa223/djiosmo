@@ -769,8 +769,9 @@ function playClickSound() {
 }
 
 /**
- * Overbudget Alert SFX: Suara peringatan dua nada 'beep-beep'
- * Tegas, jelas, dan memberi penanda visual & audio seketika
+ * Overbudget Alert SFX: Sirine Bahaya / Emergency Alarm (Sangat Gawat & Kritis)
+ * 3 nada tinggi tajam & cepat (sawtooth wave, pitch sweep 1400Hz -> 880Hz)
+ * Memberikan penanda bahaya maksimal saat batas saldo dompet terlampaui.
  */
 function playOverbudgetSound() {
   try {
@@ -778,23 +779,29 @@ function playOverbudgetSound() {
     if (!ctx) return;
 
     const now = ctx.currentTime;
-    // Beep 1: 520Hz (0.11s)
-    playWarningBeep(ctx, 520, now, 0.11);
-    // Beep 2: 780Hz (0.14s) dengan jeda singkat
-    playWarningBeep(ctx, 780, now + 0.16, 0.14);
+    // 3 Pulse sirine darurat yang agresif, tajam, dan intens
+    playEmergencySirenPulse(ctx, 1400, 880, now, 0.13);
+    playEmergencySirenPulse(ctx, 1450, 900, now + 0.16, 0.13);
+    playEmergencySirenPulse(ctx, 1550, 850, now + 0.32, 0.18);
   } catch (err) {
     // Non-blocking fallback
   }
 }
 
-function playWarningBeep(ctx, freq, startTime, duration) {
+function playEmergencySirenPulse(ctx, startFreq, endFreq, startTime, duration) {
   const osc = ctx.createOscillator();
   const gain = ctx.createGain();
 
-  osc.type = 'triangle';
-  osc.frequency.setValueAtTime(freq, startTime);
+  // Gelombang sawtooth untuk karakter suara tajam & agresif
+  osc.type = 'sawtooth';
 
-  gain.gain.setValueAtTime(0.22, startTime);
+  // Efek siren sweep / pitch drop yang tegas
+  osc.frequency.setValueAtTime(startFreq, startTime);
+  osc.frequency.exponentialRampToValueAtTime(Math.max(100, endFreq), startTime + duration);
+
+  // Gain level tegas (~0.34) dengan envelope bersih
+  gain.gain.setValueAtTime(0.34, startTime);
+  gain.gain.setValueAtTime(0.34, startTime + duration * 0.7);
   gain.gain.exponentialRampToValueAtTime(0.001, startTime + duration);
 
   osc.connect(gain);
