@@ -1034,18 +1034,27 @@ function updateSafetyBudgetBar() {
 // SHOPEE-STYLE CATALOG & CART RENDER HELPERS
 // ===================================================================
 
-function addToCart(productOrId) {
+let lastAddClickTime = 0;
+let lastAddProdKey = '';
+
+function addToCart(productOrId, maybeId) {
+  let prodInput = productOrId;
+  // If invoked as an inline event listener or passed Event
+  if (prodInput && (prodInput.preventDefault || prodInput.stopPropagation || prodInput.target)) {
+    prodInput = maybeId || (prodInput.currentTarget && prodInput.currentTarget.getAttribute('data-id')) || (prodInput.target && prodInput.target.closest && prodInput.target.closest('[data-id]')?.getAttribute('data-id'));
+  }
+
   let prod = null;
-  if (typeof productOrId === 'string') {
-    prod = MASTER_PRODUCTS_CATALOG.find(p => p.id === productOrId);
+  if (typeof prodInput === 'string') {
+    prod = MASTER_PRODUCTS_CATALOG.find(p => p.id === prodInput);
     if (!prod) {
-      prod = state.benchmarkCatalog.find(b => b.id === productOrId || b.name.toLowerCase() === productOrId.toLowerCase());
+      prod = state.benchmarkCatalog.find(b => b.id === prodInput || b.name.toLowerCase() === prodInput.toLowerCase());
     }
     if (!prod) {
       prod = {
-        id: productOrId,
-        nama: productOrId,
-        name: productOrId,
+        id: prodInput,
+        nama: prodInput,
+        name: prodInput,
         kategori: 'Bahan Pokok',
         category: 'Bahan Pokok',
         harga: 10000,
@@ -1056,14 +1065,23 @@ function addToCart(productOrId) {
         gambar: '🛒'
       };
     }
-  } else if (productOrId && typeof productOrId === 'object') {
-    prod = productOrId;
+  } else if (prodInput && typeof prodInput === 'object') {
+    prod = prodInput;
   }
 
   if (!prod) return;
 
   const prodName = prod.nama || prod.name || 'Barang';
   const prodId = prod.id || ('prod-' + Date.now());
+
+  // Prevent duplicate execution within 150ms (for unified mouse/pointer/click)
+  const callKey = String(prodId);
+  const now = Date.now();
+  if (callKey === lastAddProdKey && (now - lastAddClickTime) < 150) {
+    return;
+  }
+  lastAddClickTime = now;
+  lastAddProdKey = callKey;
   const prodCategory = prod.kategori || prod.category || 'Bahan Pokok';
   const prodUnit = (prod.satuan || prod.unit || 'pcs').replace('@', '');
   const prodIcon = prod.icon || prod.gambar || '🛒';
@@ -1133,7 +1151,18 @@ function addToCart(productOrId) {
 
 const addCatalogProductToCart = addToCart;
 
+let lastQtyClickTime = 0;
+let lastQtyItemKey = '';
+
 function updateQty(itemId, delta) {
+  const now = Date.now();
+  const key = `${itemId}_${delta}`;
+  if (key === lastQtyItemKey && (now - lastQtyClickTime) < 150) {
+    return;
+  }
+  lastQtyClickTime = now;
+  lastQtyItemKey = key;
+
   changeItemQty(itemId, delta);
 }
 
@@ -2822,33 +2851,55 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
-  // Delegated click handler for Shopee Catalog Add & Stepper buttons
-  document.addEventListener('click', (e) => {
+  // Unified Click & Mouse/Pointer Handler for Shopee Catalog Add & Stepper buttons (PC & Mobile)
+  const handleUnifiedCatalogInteraction = (e) => {
+    const targetElement = (e.target && e.target.nodeType === 3)
+      ? e.target.parentElement
+      : (e.target instanceof Element ? e.target : null);
+    if (!targetElement) return;
+
     // 1. Add to cart button (+ Tambah / + Keranjang)
-    const addBtn = e.target.closest('.btn-shopee-add');
+    const addBtn = targetElement.closest('.btn-shopee-add');
     if (addBtn) {
       const prodId = addBtn.getAttribute('data-id');
       if (prodId) {
-        e.preventDefault();
-        e.stopPropagation();
+        if (e.type === 'click') {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         addToCart(prodId);
         return;
       }
     }
 
     // 2. Stepper buttons (+ / -)
-    const stepperBtn = e.target.closest('.btn-stepper-plus, .btn-stepper-minus');
+    const stepperBtn = targetElement.closest('.btn-stepper-plus, .btn-stepper-minus');
     if (stepperBtn && stepperBtn.hasAttribute('data-id') && stepperBtn.hasAttribute('data-delta')) {
       const itemId = stepperBtn.getAttribute('data-id');
       const delta = parseInt(stepperBtn.getAttribute('data-delta'), 10);
       if (itemId && !isNaN(delta)) {
-        e.preventDefault();
-        e.stopPropagation();
+        if (e.type === 'click') {
+          e.preventDefault();
+          e.stopPropagation();
+        }
         updateQty(itemId, delta);
         return;
       }
     }
-  });
+  };
+
+  // Capture phase ensures clicks are never swallowed by slider gestures or CSS pseudo-elements
+  document.addEventListener('click', handleUnifiedCatalogInteraction, true);
+  document.addEventListener('pointerup', (e) => {
+    if (e.pointerType === 'mouse') {
+      handleUnifiedCatalogInteraction(e);
+    }
+  }, true);
+
+  const groceryContainer = document.getElementById('groceryListContainer');
+  if (groceryContainer) {
+    groceryContainer.addEventListener('click', handleUnifiedCatalogInteraction, true);
+  }
 
   // Initial visual active state for preset buttons
   updatePresetButtonsUI(state.budgetLimit);
